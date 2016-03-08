@@ -1,4 +1,4 @@
-package com.multifunctionclock;
+package com.elclcd.multifunctionclock;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

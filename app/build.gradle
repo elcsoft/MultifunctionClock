@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.multifunctionclock"
+        applicationId "com.elclcd.multifunctionclock"
         minSdkVersion 22
         targetSdkVersion 22
         versionCode 1
