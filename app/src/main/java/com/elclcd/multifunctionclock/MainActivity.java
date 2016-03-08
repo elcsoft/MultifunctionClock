@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends Activity {  
+import java.io.File;
 
 public class MainActivity extends Activity {
     private String OpenTime;
