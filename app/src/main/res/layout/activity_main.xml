@@ -30,6 +30,14 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
+<com.elclcd.multifunctionclock.MyLinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="100dp">
+
+    <CheckBox android:id="@+id/checkboxtian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/xingqitian"/>
 
         <CheckBox android:id="@+id/checkboxyi"
             android:text="@string/xingqiyi"
@@ -63,10 +71,7 @@
             android:layout_height="wrap_content"
             android:text="@string/xingqiliu"/>
 
-        <CheckBox android:id="@+id/checkboxtian"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/xingqitian"/>
+</com.elclcd.multifunctionclock.MyLinearLayout>
 
 
 

@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends Activity{
     private String OpenTime;
@@ -24,6 +27,15 @@ public class MainActivity extends Activity{
     private Button submit;
     private String timeOn;//开机时间
     private String timeOff;//关机时间
+
+    private CheckBox sunday;
+    private CheckBox monday;
+    private CheckBox tuesday;
+    private CheckBox wednesday;
+    private CheckBox thursday;
+    private CheckBox friday;
+    private CheckBox saturday;
+
 
 
 
@@ -52,6 +64,63 @@ public class MainActivity extends Activity{
 
         submit= (Button) findViewById(R.id.buttonSubmit);
         submit.setOnClickListener(new SubmitLinsister());
+
+
+        sunday= (CheckBox) findViewById(R.id.checkboxtian);
+        saturday= (CheckBox) findViewById(R.id.checkboxliu);
+        friday= (CheckBox) findViewById(R.id.checkboxwu);
+        thursday= (CheckBox) findViewById(R.id.checkboxsi);
+        wednesday= (CheckBox) findViewById(R.id.checkboxsan);
+        tuesday= (CheckBox) findViewById(R.id.checkboxer);
+        monday= (CheckBox) findViewById(R.id.checkboxyi);
+
+        getSheardData();
+
+    }
+//获取存储的数据判断是否选中
+    public void getSheardData(){
+        SharedPreferences shareData=getSharedPreferences("times",Context.MODE_PRIVATE);
+
+        String checkboxCheck=shareData.getString("checkbox", "");
+        if(checkboxCheck.equals("yes")){
+            checkbox.setChecked(true);
+        }
+
+        String sundayCheck=shareData.getString("sunday", "");
+        if(sundayCheck.equals("yes")){
+            sunday.setChecked(true);
+        }
+
+        String saturdayCheck=shareData.getString("saturday","");
+        if(saturdayCheck.equals("yes")){
+            saturday.setChecked(true);
+        }
+
+        String fridayCheck=shareData.getString("friday","");
+        if(fridayCheck.equals("yes")){
+            friday.setChecked(true);
+        }
+
+
+        String thursdayCheck=shareData.getString("thursday","");
+        if(thursdayCheck.equals("yes")){
+            thursday.setChecked(true);
+        }
+
+        String wednesdayCheck=shareData.getString("wednesday","");
+        if(wednesdayCheck.equals("yes")){
+            wednesday.setChecked(true);
+        }
+
+        String tuesdayCheck=shareData.getString("tuesday","");
+        if(tuesdayCheck.equals("yes")){
+            tuesday.setChecked(true);
+        }
+
+        String mondayCheck=shareData.getString("monday","");
+        if(mondayCheck.equals("yes")){
+            monday.setChecked(true);
+        }
     }
 
 //提交按钮监听
@@ -59,12 +128,9 @@ public class MainActivity extends Activity{
     @Override
         public void onClick(View v) {
         //如果开关按钮选中了就存储数据
-            if(checkbox.isChecked()){
+//            if(checkbox.isChecked()){
                 sheardperfences(timeOn,timeOff);
-//     Toast.makeText(MainActivity.this,"",Toast.LENGTH_LONG).show();
-            }else{
-
-            }
+//            }
     }
 }
    //左边timepicker监听
@@ -108,12 +174,61 @@ public class MainActivity extends Activity{
          if(timeOff==null||timeOff.equals("")){
              timeOff=getnewTime(timePickerright);
          }
+
          //存储
          SharedPreferences sharePre=getSharedPreferences("times",Context.MODE_PRIVATE);
          SharedPreferences.Editor editor =sharePre.edit();
+         if(checkbox.isChecked()){
+             editor.putString("checkbox", "yes");
+         }else{
+             editor.putString("checkbox","no");
+         }
+
+         if(sunday.isChecked()){
+             editor.putString("sunday","yes");
+         }else {
+             editor.putString("sunday","no");
+         }
+         if(saturday.isChecked()){
+             editor.putString("saturday","yes");
+         }else {
+             editor.putString("saturday","no");
+         }
+
+         if(friday.isChecked()){
+             editor.putString("friday","yes");
+         }else {
+             editor.putString("friday","no");
+         }
+
+         if(thursday.isChecked()){
+             editor.putString("thursday","yes");
+         }else {
+             editor.putString("thursday","no");
+         }
+
+         if(wednesday.isChecked()){
+             editor.putString("wednesday","yes");
+         }else {
+             editor.putString("wednesday","no");
+         }
+
+         if(tuesday.isChecked()){
+             editor.putString("tuesday","yes");
+         }else {
+             editor.putString("tuesday","no");
+         }
+         if(monday.isChecked()){
+             editor.putString("monday","yes");
+         }else {
+             editor.putString("monday","no");
+         }
+    //保存开关机时间
          editor.putString("timeNo",timeNo);
-         editor.putString("timeOff",timeOff);
+         editor.putString("timeOff", timeOff);
          editor.commit();
+
+         Toast.makeText(this,sharePre.getString("sunday","-"),Toast.LENGTH_LONG).show();
 
          Toast.makeText(MainActivity.this,sharePre.getString("timeNo","0")+"---"+sharePre.getString("timeOff","0"),Toast.LENGTH_LONG).show();
 
