@@ -64,13 +64,9 @@ public class MyLinearLayout extends ViewGroup {
 
                 lengthY = row * (height + VIEW_MARGIN) + VIEW_MARGIN + height
                         + t;
-
             }
-
             child.layout(lengthX - width, lengthY - height, lengthX, lengthY);
-
         }
-
 
     }
 
