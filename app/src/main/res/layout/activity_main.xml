@@ -30,10 +30,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-<RadioGroup
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
 
         <CheckBox android:id="@+id/checkboxyi"
             android:text="@string/xingqiyi"
@@ -72,7 +68,7 @@
             android:layout_height="wrap_content"
             android:text="@string/xingqitian"/>
 
-</RadioGroup>
+
 
     </LinearLayout>
 
