@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * 定时开关机的闹钟
+ */
 public class MainActivity extends Activity{
     private String OpenTime;
     private String ClosedTime;
@@ -37,8 +40,6 @@ public class MainActivity extends Activity{
     private CheckBox saturday;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,10 @@ public class MainActivity extends Activity{
 
 
     }
-    //初始化
+    /**
+     * 初始化控件
+     */
+
     public void init(){
         //开关
         checkbox= (CheckBox) findViewById(R.id.checkbox);
@@ -77,10 +81,14 @@ public class MainActivity extends Activity{
         getSheardData();
 
     }
-//获取存储的数据判断是否选中
-    public void getSheardData(){
-        SharedPreferences shareData=getSharedPreferences("times",Context.MODE_PRIVATE);
 
+    /**
+     * 初始化控件
+     * 将保存的数据从sharedPreferences中取出并设置在控件上
+     */
+    public void getSheardData(){
+        SharedPreferences shareData=getSharedPreferences("times", Context.MODE_PRIVATE);
+        //复选框
         String checkboxCheck=shareData.getString("checkbox", "");
         if(checkboxCheck.equals("yes")){
             checkbox.setChecked(true);
@@ -121,19 +129,45 @@ public class MainActivity extends Activity{
         if(mondayCheck.equals("yes")){
             monday.setChecked(true);
         }
+        //初始化时间控件
+        String timeNo=shareData.getString("timeNo","");
+        if(!timeNo.equals("")||timeNo!=null){
+            try{
+               int  hour=Integer.parseInt(timeNo.substring(8,10));
+                int minute=Integer.parseInt(timeNo.substring(10));
+
+                timePickerlift.setCurrentHour(hour);
+                timePickerlift.setCurrentMinute(minute);
+            }catch (Exception e){
+            }
+        }
+        String timeOff=shareData.getString("timeOff","");
+        if(!timeOff.equals("")||timeOff!=null){
+            try{
+                int  hour=Integer.parseInt(timeOff.substring(8,10));
+               int  minute=Integer.parseInt(timeOff.substring(10));
+
+                timePickerright.setCurrentHour(hour);
+                timePickerright.setCurrentMinute(minute);
+            }catch (Exception e){
+
+            }
+        }
     }
 
-//提交按钮监听
+    /**
+     * 提交按钮监听
+     */
      class SubmitLinsister implements View.OnClickListener{
     @Override
         public void onClick(View v) {
-        //如果开关按钮选中了就存储数据
-//            if(checkbox.isChecked()){
                 sheardperfences(timeOn,timeOff);
-//            }
     }
 }
-   //左边timepicker监听
+
+    /**
+     * 左边timepicker监听
+     */
    class LiftTimeChangedLinsister implements TimePicker.OnTimeChangedListener{
          @Override
          public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
@@ -144,7 +178,9 @@ public class MainActivity extends Activity{
      }
 
 
-    //右边timePicker监听
+    /**
+     * 右边timePicker监听
+     */
     class rigtTimeChangeLinsiser implements TimePicker.OnTimeChangedListener{
         @Override
         public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
@@ -165,7 +201,10 @@ public class MainActivity extends Activity{
         String  time=year+chick(month)+chick(date)+chick(hour)+chick(minute);
         return  time;
     }
-//    将当前获取的timePicker的时间存储起来
+
+    /**
+     * 存储数据
+     */
      public void sheardperfences(String timeNo ,String timeOff){
          //没有触发timepicker时获取timepicker当前显示的时间
        if(timeNo==null||timeNo.equals("")){
@@ -175,7 +214,6 @@ public class MainActivity extends Activity{
              timeOff=getnewTime(timePickerright);
          }
 
-         //存储
          SharedPreferences sharePre=getSharedPreferences("times",Context.MODE_PRIVATE);
          SharedPreferences.Editor editor =sharePre.edit();
          if(checkbox.isChecked()){
@@ -228,9 +266,7 @@ public class MainActivity extends Activity{
          editor.putString("timeOff", timeOff);
          editor.commit();
 
-         Toast.makeText(this,sharePre.getString("sunday","-"),Toast.LENGTH_LONG).show();
-
-         Toast.makeText(MainActivity.this,sharePre.getString("timeNo","0")+"---"+sharePre.getString("timeOff","0"),Toast.LENGTH_LONG).show();
+         Toast.makeText(this,"设置成功！",Toast.LENGTH_LONG).show();
 
      }
 
