@@ -12,6 +12,8 @@ import android.widget.CompoundButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.elclcd.utils.TimePickerSize;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
