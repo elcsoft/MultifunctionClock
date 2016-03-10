@@ -18,14 +18,14 @@ import java.util.Calendar;
  * 定时开关机的闹钟
  */
 public class MainActivity extends Activity{
-    private TimePicker timePickerlift;
-    private TimePicker timePickerright;
-    private CheckBox checkbox;
-    private Button submit;
+    private TimePicker timePickerlift;//开机timepicker
+    private TimePicker timePickerright;//关机timepicker
+    private CheckBox checkbox;//开关
+    private Button submit;//提交
     private String timeOn;//开机时间
     private String timeOff;//关机时间
 
-    private CheckBox sunday;
+    private CheckBox sunday;//星期天
     private CheckBox monday;
     private CheckBox tuesday;
     private CheckBox wednesday;
@@ -39,10 +39,10 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
         //去掉title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.activity_main);
         init();
         getSheardData();
+
     }
     /**
      * 初始化控件
@@ -50,6 +50,7 @@ public class MainActivity extends Activity{
     public void init(){
         //开关
         checkbox= (CheckBox) findViewById(R.id.checkbox);
+        checkbox.setOnClickListener(new SwitchLinesister());
 
         //timepicker
         timePickerlift= (TimePicker) findViewById(R.id.timePicker);
@@ -57,8 +58,6 @@ public class MainActivity extends Activity{
         TimePickerSize timeSize=new TimePickerSize();
         timeSize.resizePikcer(timePickerlift);
         timeSize.resizePikcer(timePickerright);
-
-
         timePickerlift.setIs24HourView(true);
         timePickerright.setIs24HourView(true);
         timePickerlift.setOnTimeChangedListener(new LiftTimeChangedLinsister());
@@ -66,6 +65,7 @@ public class MainActivity extends Activity{
 
         submit= (Button) findViewById(R.id.buttonSubmit);
         submit.setOnClickListener(new SubmitLinsister());
+        submit.getBackground().setAlpha(20);//设置背景为透明的
 
         sunday= (CheckBox) findViewById(R.id.checkboxtian);
         saturday= (CheckBox) findViewById(R.id.checkboxliu);
@@ -74,13 +74,17 @@ public class MainActivity extends Activity{
         wednesday= (CheckBox) findViewById(R.id.checkboxsan);
         tuesday= (CheckBox) findViewById(R.id.checkboxer);
         monday= (CheckBox) findViewById(R.id.checkboxyi);
+    }
 
-        checkbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isOrNotCheck();
-            }
-        });
+    /**
+     * 开关监听
+     */
+    class SwitchLinesister implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            isOrNotCheck();
+        }
     }
     /**
      * 当开关开启才能操作，否者不能

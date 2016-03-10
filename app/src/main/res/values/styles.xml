@@ -11,11 +11,6 @@
 
     </style>
 
-    <style name="MyButton" parent="@android:style/Widget.Button">
-        <item name="android:button">@drawable/checkboxstyle</item>
-
-    </style>
-
 
     <style name="TextTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
