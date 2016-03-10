@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
         getUserSet();
 
 
-       String Command = ClockCommand.getCommond(timeOn, timeOff);
+        String Command = ClockCommand.getCommond(timeOn, timeOff);
         Log.i("test",Command);
         AppcationIsRun(Command);
 
@@ -68,13 +68,18 @@ public class MainActivity extends Activity {
     public void init() {
         //开关
         checkbox = (CheckBox) findViewById(R.id.checkbox);
-
+        checkbox.setOnClickListener(new SwitchLinesister());
+        
         //timepicker
         timePickerlift = (TimePicker) findViewById(R.id.timePicker);
         timePickerright = (TimePicker) findViewById(R.id.timePicker2);
+        TimePickerSize timeSize=new TimePickerSize();
+        timeSize.resizePikcer(timePickerlift);
+        timeSize.resizePikcer(timePickerright);
         timePickerlift.setIs24HourView(true);
         timePickerright.setIs24HourView(true);
 
+        
         sunday = (CheckBox) findViewById(R.id.checkboxtian);
         saturday = (CheckBox) findViewById(R.id.checkboxliu);
         friday = (CheckBox) findViewById(R.id.checkboxwu);
@@ -97,6 +102,43 @@ public class MainActivity extends Activity {
         CheckBoxlist.add(friday);
         CheckBoxlist.add(saturday);
 
+    }
+
+    /**
+     * 开关监听
+     */
+    class SwitchLinesister implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            isOrNotCheck();
+        }
+    }
+    /**
+     * 当开关开启才能操作，否者不能
+     */
+    public void isOrNotCheck(){
+        if(checkbox.isChecked()){
+            sunday.setEnabled(true);
+            saturday.setEnabled(true);
+            friday.setEnabled(true);
+            thursday.setEnabled(true);
+            wednesday.setEnabled(true);
+            tuesday.setEnabled(true);
+            monday.setEnabled(true);
+            timePickerlift.setEnabled(true);
+            timePickerright.setEnabled(true);
+        }else{
+            sunday.setEnabled(false);
+            saturday.setEnabled(false);
+            friday.setEnabled(false);
+            thursday.setEnabled(false);
+            wednesday.setEnabled(false);
+            tuesday.setEnabled(false);
+            monday.setEnabled(false);
+            timePickerlift.setEnabled(false);
+            timePickerright.setEnabled(false);
+        }
     }
 
     private void setListener() {
@@ -201,10 +243,10 @@ public class MainActivity extends Activity {
 
     //设置picker
     private void setPicker() {
-      int  Openhour = Integer.parseInt(timeOn.substring(8, 10));
+        int  Openhour = Integer.parseInt(timeOn.substring(8, 10));
         int Openminute = Integer.parseInt(timeOn.substring(10, 12));
         int Closehour = Integer.parseInt(timeOff.substring(8, 10));
-       int Closeminute = Integer.parseInt(timeOff.substring(10, 12));
+        int Closeminute = Integer.parseInt(timeOff.substring(10, 12));
         timePickerlift.setCurrentHour(Openhour);
         timePickerlift.setCurrentMinute(Openminute);
         timePickerright.setCurrentHour(Closehour);
