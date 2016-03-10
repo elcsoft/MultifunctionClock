@@ -6,9 +6,12 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
 
+
+
     <RelativeLayout android:id="@+id/kaiguan"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
 
         <TextView android:id="@+id/title2"
             android:layout_width="fill_parent"
@@ -16,66 +19,84 @@
             android:text="@string/title2"
             android:gravity="center_vertical"/>
 
+
         <CheckBox android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"/>
 
+
     </RelativeLayout>
 
-<LinearLayout android:id="@+id/linear"
-    android:layout_width="fill_parent"
-    android:layout_below="@+id/kaiguan"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
 
-<com.elclcd.multifunctionclock.MyLinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="100dp">
-
-    <CheckBox android:id="@+id/checkboxtian"
-        android:layout_width="wrap_content"
+    <LinearLayout android:id="@+id/linear"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/kaiguan"
         android:layout_height="wrap_content"
-        android:text="@string/xingqitian"/>
-
-        <CheckBox android:id="@+id/checkboxyi"
-            android:text="@string/xingqiyi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="0"/>
-
-        <CheckBox android:id="@+id/checkboxer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/xingqier"/>
+        android:orientation="horizontal">
 
 
-        <CheckBox android:id="@+id/checkboxsan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/xingqisan"/>
+        <!--<com.elclcd.multifunctionclock.MyLinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="100dp">-->
 
 
-        <CheckBox android:id="@+id/checkboxsi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/xingqisi"/>
+            <!--<CheckBox android:id="@+id/checkboxtian"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/xingqitian"/>-->
 
-        <CheckBox android:id="@+id/checkboxwu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/xingqiwu"/>
-        <CheckBox android:id="@+id/checkboxliu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/xingqiliu"/>
 
-</com.elclcd.multifunctionclock.MyLinearLayout>
+            <!--<CheckBox android:id="@+id/checkboxyi"-->
+                <!--android:text="@string/xingqiyi"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAlignment="0"/>-->
+
+
+            <!--<CheckBox android:id="@+id/checkboxer"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/xingqier"/>-->
+
+
+
+
+            <!--<CheckBox android:id="@+id/checkboxsan"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/xingqisan"/>-->
+
+
+
+
+            <!--<CheckBox android:id="@+id/checkboxsi"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/xingqisi"/>-->
+
+
+            <!--<CheckBox android:id="@+id/checkboxwu"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/xingqiwu"/>-->
+            <!--<CheckBox android:id="@+id/checkboxliu"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/xingqiliu"/>-->
+
+
+        <!--</com.elclcd.multifunctionclock.MyLinearLayout>-->
+
+
+
 
 
 
     </LinearLayout>
+
+
 
 
     <LinearLayout android:id="@+id/timepickerLinear"
@@ -85,26 +106,30 @@
         android:orientation="horizontal"
         android:layout_marginTop="20dp">
 
+
         <RelativeLayout android:id="@+id/shijianleft"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             >
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/kaiji"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"/>
-        <TimePicker android:id="@+id/timePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            >
-        </TimePicker>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kaiji"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"/>
+            <TimePicker android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                >
+            </TimePicker>
+
 
         </RelativeLayout>
+
+
 
 
         <RelativeLayout android:id="@+id/shijianright"
@@ -127,29 +152,27 @@
                 >
             </TimePicker>
 
+
         </RelativeLayout>
+
 
     </LinearLayout>
 
 
-<LinearLayout android:layout_below="@+id/timepickerLinear"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:gravity="center">
-    <Button android:id="@+id/buttonSubmit"
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout android:layout_below="@+id/timepickerLinear"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/submit"/>
-</LinearLayout>
-
-
-
-
-
-
-
-
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
+        <Button android:id="@+id/buttonSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"/>
+    </LinearLayout>
 
 
 </RelativeLayout>
+
+ 
