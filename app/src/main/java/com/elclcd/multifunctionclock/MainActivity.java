@@ -5,20 +5,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
+import com.elclcd.utils.TimePickerSize;
+
 import java.util.Calendar;
 /**
  * 定时开关机的闹钟
  */
 public class MainActivity extends Activity{
-    private String OpenTime;
-    private String ClosedTime;
     private TimePicker timePickerlift;
     private TimePicker timePickerright;
     private CheckBox checkbox;
@@ -34,31 +33,32 @@ public class MainActivity extends Activity{
     private CheckBox friday;
     private CheckBox saturday;
 
-    private Button guanji;
-    private Button kaiji;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //去掉title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_main);
-        getUserSet();
-        setTitle("定时开机功能");
         init();
-
-
+        getSheardData();
     }
     /**
      * 初始化控件
      */
-
     public void init(){
         //开关
         checkbox= (CheckBox) findViewById(R.id.checkbox);
 
         //timepicker
         timePickerlift= (TimePicker) findViewById(R.id.timePicker);
-        timePickerright= (TimePicker) findViewById(R.id.timePicker2);
+        timePickerright= (TimePicker)findViewById(R.id.timePicker2);
+        TimePickerSize timeSize=new TimePickerSize();
+        timeSize.resizePikcer(timePickerlift);
+        timeSize.resizePikcer(timePickerright);
+
+
         timePickerlift.setIs24HourView(true);
         timePickerright.setIs24HourView(true);
         timePickerlift.setOnTimeChangedListener(new LiftTimeChangedLinsister());
@@ -66,7 +66,6 @@ public class MainActivity extends Activity{
 
         submit= (Button) findViewById(R.id.buttonSubmit);
         submit.setOnClickListener(new SubmitLinsister());
-
 
         sunday= (CheckBox) findViewById(R.id.checkboxtian);
         saturday= (CheckBox) findViewById(R.id.checkboxliu);
@@ -76,31 +75,39 @@ public class MainActivity extends Activity{
         tuesday= (CheckBox) findViewById(R.id.checkboxer);
         monday= (CheckBox) findViewById(R.id.checkboxyi);
 
-        getSheardData();
-
-//        kaiji= (Button) findViewById(R.id.button_kaiji);
-//        guanji= (Button) findViewById(R.id.button_guanji);
-//        kaiji.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        guanji.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    Runtime.getRuntime().exec("su -c \"/system/bin/shutdown\"");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-
-
+        checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isOrNotCheck();
+            }
+        });
     }
-
-
+    /**
+     * 当开关开启才能操作，否者不能
+     */
+    public void isOrNotCheck(){
+        if(checkbox.isChecked()){
+            sunday.setEnabled(true);
+            saturday.setEnabled(true);
+            friday.setEnabled(true);
+            thursday.setEnabled(true);
+            wednesday.setEnabled(true);
+            tuesday.setEnabled(true);
+            monday.setEnabled(true);
+            timePickerlift.setEnabled(true);
+            timePickerright.setEnabled(true);
+        }else{
+            sunday.setEnabled(false);
+            saturday.setEnabled(false);
+            friday.setEnabled(false);
+            thursday.setEnabled(false);
+            wednesday.setEnabled(false);
+            tuesday.setEnabled(false);
+            monday.setEnabled(false);
+            timePickerlift.setEnabled(false);
+            timePickerright.setEnabled(false);
+        }
+    }
 
     /**
      * 初始化控件
@@ -113,54 +120,57 @@ public class MainActivity extends Activity{
         if(checkboxCheck.equals("yes")){
             checkbox.setChecked(true);
         }
-
+        isOrNotCheck();
+        //获取sunday存储状态的信息
         String sundayCheck=shareData.getString("sunday", "");
         if(sundayCheck.equals("yes")){
             sunday.setChecked(true);
         }
-
+        //获取saturday存储状态的信息
         String saturdayCheck=shareData.getString("saturday","");
         if(saturdayCheck.equals("yes")){
             saturday.setChecked(true);
         }
-
+        //获取friday存储状态的信息
         String fridayCheck=shareData.getString("friday","");
         if(fridayCheck.equals("yes")){
             friday.setChecked(true);
         }
 
-
+        //获取thursday存储状态的信息
         String thursdayCheck=shareData.getString("thursday","");
         if(thursdayCheck.equals("yes")){
             thursday.setChecked(true);
         }
-
+        //获取wednesday存储状态的信息
         String wednesdayCheck=shareData.getString("wednesday","");
         if(wednesdayCheck.equals("yes")){
             wednesday.setChecked(true);
         }
-
+        //获取tuesday存储状态的信息
         String tuesdayCheck=shareData.getString("tuesday","");
         if(tuesdayCheck.equals("yes")){
             tuesday.setChecked(true);
         }
-
+        //获取monday存储状态的信息
         String mondayCheck=shareData.getString("monday","");
         if(mondayCheck.equals("yes")){
             monday.setChecked(true);
         }
-        //初始化时间控件
+        //初始化时间控件（将获取的状态显示在界面）
+        //获取存储的开机时间
         String timeNo=shareData.getString("timeNo","");
         if(!timeNo.equals("")||timeNo!=null){
             try{
                int  hour=Integer.parseInt(timeNo.substring(8,10));
                 int minute=Integer.parseInt(timeNo.substring(10));
-
+                //获取控件当前显示的时间
                 timePickerlift.setCurrentHour(hour);
                 timePickerlift.setCurrentMinute(minute);
             }catch (Exception e){
-            }
+                            }
         }
+        //获取存储的关机时间
         String timeOff=shareData.getString("timeOff","");
         if(!timeOff.equals("")||timeOff!=null){
             try{
@@ -207,6 +217,8 @@ public class MainActivity extends Activity{
             timeOff=getnewTime(timePickerright);
         }
     }
+
+
     //获取当前时间
     public String getnewTime(TimePicker timePicker){
         //获取日历中的年月
@@ -217,7 +229,6 @@ public class MainActivity extends Activity{
         //获取timepick的时间
         int hour=timePicker.getCurrentHour();
         int minute=timePicker.getCurrentMinute();
-
         String  time=year+chick(month)+chick(date)+chick(hour)+chick(minute);
         return  time;
     }
@@ -233,16 +244,15 @@ public class MainActivity extends Activity{
          if(timeOff==null||timeOff.equals("")){
              timeOff=getnewTime(timePickerright);
          }
-
          //存储
          SharedPreferences sharePre=getSharedPreferences("times",Context.MODE_PRIVATE);
          SharedPreferences.Editor editor =sharePre.edit();
          if(checkbox.isChecked()){
+
              editor.putString("checkbox", "yes");
          }else{
              editor.putString("checkbox","no");
          }
-
          if(sunday.isChecked()){
              editor.putString("sunday","yes");
          }else {
@@ -273,12 +283,16 @@ public class MainActivity extends Activity{
          }
 
          if(tuesday.isChecked()){
+
              editor.putString("tuesday","yes");
+
          }else {
              editor.putString("tuesday","no");
          }
          if(monday.isChecked()){
+
              editor.putString("monday","yes");
+
          }else {
              editor.putString("monday","no");
          }
@@ -300,13 +314,10 @@ public class MainActivity extends Activity{
             return intchick+"";
         }
     }
-    //读取用户设置
-    public void getUserSet(){
-        File userset =new File("");
-        if(userset.exists()){
-            SharedPreferences sp= getSharedPreferences("", Context.MODE_PRIVATE);
-            String OpenTime=sp.getString("opentime", "00:00");
-            String ClosedTime=sp.getString("closedtime", "00:00");
-        }
-    }
+
+
+
+
+
+
 }
