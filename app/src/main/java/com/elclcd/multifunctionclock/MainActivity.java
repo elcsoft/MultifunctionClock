@@ -6,13 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.elclcd.utils.TimePickerSize;
+import com.elclcd.multifunctionclock.utils.ClockCommand;
+import com.elclcd.multifunctionclock.utils.UTIL;
+import com.elclcd.multifunctionclock.utils.TimePickerSize;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,8 +26,8 @@ public class MainActivity extends Activity {
     private String timeOff;//关机时间
     private int Currentweekday;//今天的星期的下标
     int count = 0;//计数器，保证只能增加7天
-    UTIL UTIL = new UTIL();//设置时间的工具类
-    ClockCommand ClockCommand = new ClockCommand();//时钟命令类
+    com.elclcd.multifunctionclock.utils.UTIL UTIL = new UTIL();//设置时间的工具类
+    com.elclcd.multifunctionclock.utils.ClockCommand ClockCommand = new ClockCommand();//时钟命令类
     ArrayList CheckBoxlist = new ArrayList<CheckBox>();
 
     private TimePicker timePickerlift;
