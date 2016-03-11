@@ -3,16 +3,13 @@ package com.elclcd.multifunctionclock.handler;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.TimePicker;
 
-import com.elclcd.multifunctionclock.MainActivity;
 import com.elclcd.multifunctionclock.utils.CmdExecuter;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
 import java.io.Serializable;
 import java.util.Calendar;
 
-import static com.elclcd.multifunctionclock.vo.AlarmsConfig.*;
 
 /**
  * Created by 123 on 2016/3/10.
@@ -30,18 +27,22 @@ public class Alarms {
 //resetConfig();、
         SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =sharePre.edit();
-        editor.putBoolean("checkbox",config.isEnabled());
+        editor.putBoolean("checkbox", config.isEnabled());
 
         for (int i=0;i<weeks.length;i++){
             editor.putBoolean(weeks[i],config.getDayWeek()[i]);
         }
 
-        editor.putInt("timeOnHour",config.getPowerOnTime().getHour());
-        editor.putInt("timeOnMinute",config.getPowerOnTime().getMinute());
-        editor.putInt("timeOffHour",config.getPowerOffTime().getHour());
-        editor.putInt("timeOffMinute",config.getPowerOffTime().getMinute());
+        editor.putInt("timeOnHour", config.getPowerOnTime().getHour());
+        editor.putInt("timeOnMinute", config.getPowerOnTime().getMinute());
+        editor.putInt("timeOffHour", config.getPowerOffTime().getHour());
+        editor.putInt("timeOffMinute", config.getPowerOffTime().getMinute());
 
         editor.commit();
+
+        resetConfig(config);
+
+
 
     }
 
@@ -94,18 +95,21 @@ public class Alarms {
         String offCommand=getTime(timeOff, config);
         String command=getCommond(onCommand, offCommand);
         CmdExecuter executer =new CmdExecuter();
-//        Boolean b=config.isEnabled();
-//        if(b==true){
-//            executer.exec(command);
+        Boolean b=config.isEnabled();
+        if(b==true){
+            executer.exec(command);
 //            return  true;
-//        }
+        }
 //        return  false;
+
+        Log.i("-------------",command+"");
           return  command;
+
     }
 
     private  static  String getTime(AlarmsConfig.TimePoint time,AlarmsConfig config){
         Calendar c = Calendar.getInstance();
-        int []time1=getDate(time,config);
+        int []time1=getDate(time, config);
         String year =Chick(time1[0]);
         String month =Chick(time1[1]);
         String day =Chick(time1[2]);

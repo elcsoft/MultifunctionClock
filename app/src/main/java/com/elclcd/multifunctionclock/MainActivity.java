@@ -17,6 +17,8 @@ import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,6 +136,18 @@ public class MainActivity extends Activity {
         timePickerright.setCurrentMinute(config.getPowerOffTime().getMinute());
 
 
+//        String command="/system/xbin/test 201603111655 201603111658 enable";
+//        try {
+//            Process p=Runtime.getRuntime().exec("su");
+//            DataOutputStream dos = new DataOutputStream(p.getOutputStream());
+//            dos.writeBytes(command + "\n");
+//            dos.flush();
+//            dos.writeBytes("exit\n");
+//            dos.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
     }
 
     /**
@@ -211,7 +225,7 @@ public class MainActivity extends Activity {
         dialog_button= (TextView) view.findViewById(R.id.dialog_text_button);
         mAlertDialog.show();
         mAlertDialog.getWindow().setContentView(view);
-        mAlertDialog.getWindow().setLayout(310, 340);
+        mAlertDialog.getWindow().setLayout(320, 340);
         mAlertDialog.setCanceledOnTouchOutside(false);//dialog之外的地方不可点击
 
         dialog_button.setOnClickListener(new View.OnClickListener() {
@@ -222,9 +236,9 @@ public class MainActivity extends Activity {
         });
 
         String ver=Application.getLocalVersionName(MainActivity.this);
-        String code=Application.getVersion(MainActivity.this);
+        int code=Application.getVersion(MainActivity.this);
         verView.setText(ver);
-        codeView.setText(code);
+        codeView.setText(code+"");
 
     }
 
@@ -259,6 +273,5 @@ public class MainActivity extends Activity {
             timePickerright.setEnabled(false);
         }
     }
-
 
 }
