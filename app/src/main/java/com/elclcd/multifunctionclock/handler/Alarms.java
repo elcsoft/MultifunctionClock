@@ -148,8 +148,6 @@ public class Alarms {
             } else {
                 times[2] = day;
             }
-        } else {
-            times[2] = day + discrepancy;
         }
         else {
             times[2]=day+discrepancy;
@@ -175,7 +173,7 @@ public class Alarms {
         sb.append(" ");
         sb.append(timeOff);
         sb.append(" ");
-        sb.append("enable");
+        sb.append("disable");
         return sb.toString();
     }
 
