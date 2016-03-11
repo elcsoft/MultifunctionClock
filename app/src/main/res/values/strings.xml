@@ -18,5 +18,10 @@
 
     <string name="submit">提交</string>
 
+    <string name="dialog_title">TECHFIVE_Manager</string>
+    <string name="dialog_ver">Ver:</string>
+    <string name="dialog_code">Code:</string>
+    <string name="dialog_button">FERME</string>
+
 
 </resources>

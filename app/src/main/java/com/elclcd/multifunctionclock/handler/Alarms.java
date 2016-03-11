@@ -15,10 +15,13 @@ import com.elclcd.multifunctionclock.MainActivity;
 import com.elclcd.multifunctionclock.utils.CmdExecuter;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.elclcd.multifunctionclock.vo.AlarmsConfig.*;
 
 /**
  * Created by 123 on 2016/3/10.
@@ -27,6 +30,8 @@ public class Alarms {
 
     private static String onCommand;//开机时间
     private static AlarmsConfig  config1;
+
+    private static String[] weeks={"monday","tuesday","wednesday","thursday","friday","staturday","sunday"};
 
     /**
      * 保存配置
@@ -145,6 +150,9 @@ public class Alarms {
             }
         } else {
             times[2] = day + discrepancy;
+        }
+        else {
+            times[2]=day+discrepancy;
         }
         return times;
     }

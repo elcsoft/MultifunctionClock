@@ -1,16 +1,19 @@
 package com.elclcd.multifunctionclock.vo;
 
+import java.io.Serializable;
+import java.util.Arrays;
+
 /**
  * Created by 123 on 2016/3/10.
  */
-public class AlarmsConfig { 
+public class AlarmsConfig implements Serializable{
 
     public boolean enabled;
     public TimePoint powerOffTime;
     public TimePoint powerOnTime;
     public boolean[] dayWeek;
 
-    public class TimePoint {
+    public static class TimePoint {
         int hour;
         int minute;
 
@@ -28,6 +31,14 @@ public class AlarmsConfig {
 
         public void setMinute(int minute) {
             this.minute = minute;
+        }
+
+        @Override
+        public String toString() {
+            return "TimePoint{" +
+                    "hour=" + hour +
+                    ", minute=" + minute +
+                    '}';
         }
     }
 
@@ -61,6 +72,16 @@ public class AlarmsConfig {
 
     public void setDayWeek(boolean[] dayWeek) {
         this.dayWeek = dayWeek;
+    }
+
+    @Override
+    public String toString() {
+        return "AlarmsConfig{" +
+                "enabled=" + enabled +
+                ", powerOffTime=" + powerOffTime +
+                ", powerOnTime=" + powerOnTime +
+                ", dayWeek=" + Arrays.toString(dayWeek) +
+                '}';
     }
 }
 
