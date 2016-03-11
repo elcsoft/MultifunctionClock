@@ -1,17 +1,23 @@
 package com.elclcd.multifunctionclock.handler;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.TimePicker;
 
 import com.elclcd.multifunctionclock.utils.CmdExecuter;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
+import java.io.Serializable;
 import java.util.Calendar;
+
+import static com.elclcd.multifunctionclock.vo.AlarmsConfig.*;
 
 /**
  * Created by 123 on 2016/3/10.
  */
 public class Alarms {
+
+    private static String[] weeks={"monday","tuesday","wednesday","thursday","friday","staturday","sunday"};
 
     /**
      * 保存配置
@@ -19,7 +25,22 @@ public class Alarms {
      * @param config
      */
     public static void saveConfig(Context context, AlarmsConfig config) {
-        //resetConfig();、
+//resetConfig();、
+        SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =sharePre.edit();
+        editor.putBoolean("checkbox",config.isEnabled());
+
+        for (int i=0;i<weeks.length;i++){
+            editor.putBoolean(weeks[i],config.getDayWeek()[i]);
+        }
+
+        editor.putInt("timeOnHour",config.getPowerOnTime().getHour());
+        editor.putInt("timeOnMinute",config.getPowerOnTime().getMinute());
+        editor.putInt("timeOffHour",config.getPowerOffTime().getHour());
+        editor.putInt("timeOffMinute",config.getPowerOffTime().getMinute());
+
+        editor.commit();
+
     }
 
     /**
@@ -28,7 +49,26 @@ public class Alarms {
      * @return
      */
     public static AlarmsConfig getConfig(Context context) {
-        return null;
+        boolean[] week=new boolean[7];
+
+        SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
+
+        AlarmsConfig alarmsConfig = new AlarmsConfig();
+        alarmsConfig.setEnablen(sharePre.getBoolean("checkbox", false));
+        for (int i=0;i<weeks.length;i++){
+            week[i]=sharePre.getBoolean(weeks[i],false);
+        }
+        alarmsConfig.setDayWeek(week);
+        AlarmsConfig.TimePoint timePoint=new AlarmsConfig.TimePoint();
+        timePoint.setHour(sharePre.getInt("timeOnHour",0));
+        timePoint.setMinute(sharePre.getInt("timeOnMinute", 0));
+        alarmsConfig.setPowerOnTime(timePoint);
+        AlarmsConfig.TimePoint timePoint2=new AlarmsConfig.TimePoint();
+        timePoint2.setHour(sharePre.getInt("timeOffHour",0));
+        timePoint2.setMinute(sharePre.getInt("timeOffMinute",0));
+        alarmsConfig.setPowerOffTime(timePoint2);
+
+        return alarmsConfig;
 
     }
 
