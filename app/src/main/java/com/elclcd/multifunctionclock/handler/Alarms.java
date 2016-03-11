@@ -82,31 +82,32 @@ public class Alarms {
 
     }
 
+
     private static int[] getDate(AlarmsConfig.TimePoint time,AlarmsConfig config) {
         Calendar c = Calendar.getInstance();
         int [] times =new int[3];
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
-//        int discrepancy=findRightDay(config,0);
+        int discrepancy=findRightDay(config);
         times[0]=year;
         times[1]=month;
-//        if(discrepancy==0){
+        if(discrepancy==0){
             Boolean b=isNeedToTomorrow(time);
             if(b==true){
                 //如果今天设定的时间小于当前的时间，则用明天设定的时间来计算差异时间
-                times[2]=day+1;
-//                    int discrepancy1=findRightDay(config,1);
-//                    times[2]=day+discrepancy1;
+//                times[2]=day+1;
+                    int discrepancy1=findRightDay(config);
+                    times[2]=day+1+discrepancy1;
 
             }
             else{
                 times[2]=day;
             }
-//        }
-////        else {
-////            times[2]=day+discrepancy;
-//        }
+        }
+        else {
+            times[2]=day+discrepancy;
+        }
         return times;
     }
 
@@ -156,9 +157,9 @@ public class Alarms {
     }
 
     //判断最近要开关机的一天与今天的相差数
-    private  static  int findRightDay(AlarmsConfig config,int addTime){
+    private  static  int findRightDay(AlarmsConfig config){
         Calendar c =Calendar.getInstance();
-        int todayIndex=c.get(Calendar.DAY_OF_WEEK)-2+addTime;//今天的星期在数组中的下标
+        int todayIndex=c.get(Calendar.DAY_OF_WEEK)-2;//今天的星期在数组中的下标
         boolean [] b=config.getDayWeek();
         int index=0;
         for(index=0;index<8;index++){
