@@ -3,7 +3,7 @@ package com.elclcd.multifunctionclock.vo;
 /**
  * Created by 123 on 2016/3/10.
  */
-public class AlarmsConfig {
+public class AlarmsConfig { 
 
     public boolean enabled;
     public TimePoint powerOffTime;
