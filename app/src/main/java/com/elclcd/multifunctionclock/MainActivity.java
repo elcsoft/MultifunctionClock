@@ -47,7 +47,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("定时开机功能");
         init();
         getCurrentWeekDay();//得到当天信息的下标
         setListener();
@@ -59,6 +58,16 @@ public class MainActivity extends Activity {
         AppcationIsRun(Command);
 
     }
+
+    //alarms get config
+    //update view
+    //通过控件视图生成AlarmConfig
+    //save config
+    //
+    //updateView(AlarmsConfig config)
+
+    //AlarmsConfig createConfig()
+
 
     private void getCurrentWeekDay() {
         Calendar c = Calendar.getInstance();
@@ -173,9 +182,9 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * //     * 存储数据
-     * //
-     */
+            * //     * 存储数据
+            * //
+            */
     public void sheardperfences(String timeNo, String timeOff) {
         //没有触发timepicker时获取timepicker当前显示的时间
         if (timeNo == null || timeNo.equals("")) {
