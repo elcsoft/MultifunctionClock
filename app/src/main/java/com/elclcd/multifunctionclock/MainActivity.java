@@ -17,8 +17,6 @@ import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +37,6 @@ public class MainActivity extends Activity {
 
     private List<CheckBox> list = null;
 
-    private Alarms alarms=new Alarms();
-
     private Button icon_dialog;//点击弹出dialog按钮
     /**
      * dialog中控件
@@ -58,13 +54,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         init();
 
-        updateView(Alarms.getConfig(this));//将获取的数据初始化控件状态
-
-//        updateView(Alarms.getConfig(this));//将获取的数据初始化控件状态
-        AlarmsConfig config =Alarms.getConfig(this);
+        AlarmsConfig config=Alarms.getConfig(this);
         if(config!=null){
+            Alarms.saveConfig(this,config);
             updateView(config);
         }
+
 
     }
 
@@ -81,10 +76,11 @@ public class MainActivity extends Activity {
         timePickerlift = (TimePicker) findViewById(R.id.timePicker);
         timePickerright = (TimePicker) findViewById(R.id.timePicker2);
         TimePickerSize timeSize = new TimePickerSize();
-        timeSize.resizePikcer(timePickerlift);
-        timeSize.resizePikcer(timePickerright);
         timePickerlift.setIs24HourView(true);
         timePickerright.setIs24HourView(true);
+//        timeSize.resizePikcer(timePickerlift);
+//        timeSize.resizePikcer(timePickerright);
+
         timePickerlift.setOnTimeChangedListener(new timeChangedLinsister());
         timePickerright.setOnTimeChangedListener(new timeChangedLinsister());
 
@@ -119,6 +115,13 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        timePickerlift.setIs24HourView(true);
+//        timePickerright.setIs24HourView(true);
+    }
+
     /**
      * 将config数据映射到视图控件
      *
@@ -140,6 +143,18 @@ public class MainActivity extends Activity {
         timePickerright.setCurrentHour(config.getPowerOffTime().getHour());
         timePickerright.setCurrentMinute(config.getPowerOffTime().getMinute());
 
+
+//        String command="/system/xbin/test 201603111655 201603111658 enable";
+//        try {
+//            Process p=Runtime.getRuntime().exec("su");
+//            DataOutputStream dos = new DataOutputStream(p.getOutputStream());
+//            dos.writeBytes(command + "\n");
+//            dos.flush();
+//            dos.writeBytes("exit\n");
+//            dos.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -188,7 +203,7 @@ public class MainActivity extends Activity {
             if(v.getId()==R.id.checkbox){
                 isOrNotCheck();
             }
-            alarms.saveConfig(MainActivity.this,createAlarmsConfig());
+            Alarms.saveConfig(MainActivity.this,createAlarmsConfig());
         }
     }
 
@@ -242,7 +257,7 @@ public class MainActivity extends Activity {
         @Override
         public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 
-            alarms.saveConfig(MainActivity.this,createAlarmsConfig());
+            Alarms.saveConfig(MainActivity.this,createAlarmsConfig());
         }
     }
 

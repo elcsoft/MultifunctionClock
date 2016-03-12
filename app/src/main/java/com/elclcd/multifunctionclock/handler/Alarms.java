@@ -74,8 +74,9 @@ public class Alarms {
     public static AlarmsConfig getConfig(Context context) {
         boolean[] week=new boolean[7];
 
-
+        
         SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
+
         AlarmsConfig alarmsConfig = new AlarmsConfig();
         alarmsConfig.setEnablen(sharePre.getBoolean("checkbox", false));
         for (int i=0;i<weeks.length;i++){
@@ -83,12 +84,12 @@ public class Alarms {
         }
         alarmsConfig.setDayWeek(week);
         AlarmsConfig.TimePoint timePoint=new AlarmsConfig.TimePoint();
-        timePoint.setHour(sharePre.getInt("timeOnHour",0));
+        timePoint.setHour(sharePre.getInt("timeOnHour", 0));
         timePoint.setMinute(sharePre.getInt("timeOnMinute", 0));
         alarmsConfig.setPowerOnTime(timePoint);
         AlarmsConfig.TimePoint timePoint2=new AlarmsConfig.TimePoint();
-        timePoint2.setHour(sharePre.getInt("timeOffHour",0));
-        timePoint2.setMinute(sharePre.getInt("timeOffMinute",0));
+        timePoint2.setHour(sharePre.getInt("timeOffHour", 0));
+        timePoint2.setMinute(sharePre.getInt("timeOffMinute", 0));
         alarmsConfig.setPowerOffTime(timePoint2);
 
         return alarmsConfig;
@@ -143,6 +144,8 @@ public class Alarms {
             command.replaceAll("enable","diable");
         }
 //        return  false;
+
+        Log.i("-----------",command);
 
         return command;
     }
