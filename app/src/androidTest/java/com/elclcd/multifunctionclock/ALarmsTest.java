@@ -17,11 +17,11 @@ public class ALarmsTest extends AndroidTestCase {
         config.getPowerOffTime().setHour(7);
         config.getPowerOffTime().setMinute(10);
         config.getPowerOnTime().setHour(7);
-        config.getPowerOnTime().setMinute(9);
-        config.setDayWeek(new boolean[]{true, true, true,true,false,false,false});
+        config.getPowerOnTime().setMinute(11);
+        config.setDayWeek(new boolean[]{false, true, false,false,false,true,false});
 
 
-       String result= Alarms.resetConfig(config);
+       String result= Alarms.resetConfig(getContext(),config);
         assertEquals("/system/xbin/test 201603112000 201603112000 enable",result);
 
     }
