@@ -17,10 +17,10 @@ import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 
 public class MainActivity extends Activity {
@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
     private CheckBox thursday;
     private CheckBox friday;
     private CheckBox saturday;
+
 
     private List<CheckBox> list = null;
 
@@ -60,6 +61,7 @@ public class MainActivity extends Activity {
             Alarms.saveConfig(this,config);
             updateView(config);
         }
+
 
     }
 
@@ -162,7 +164,6 @@ public class MainActivity extends Activity {
             config.setEnablen(true);
         }else{
             config.setEnablen(false);
-
         }
 
         for (int i=0;i<list.size();i++){
@@ -274,5 +275,6 @@ public class MainActivity extends Activity {
             timePickerright.setEnabled(false);
         }
     }
+
 
 }

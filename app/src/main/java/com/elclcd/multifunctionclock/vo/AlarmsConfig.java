@@ -9,8 +9,8 @@ import java.util.Arrays;
 public class AlarmsConfig  {
 
     public boolean enabled;
-    public TimePoint powerOffTime;
-    public TimePoint powerOnTime;
+    public TimePoint powerOffTime=new TimePoint();
+    public TimePoint powerOnTime=new TimePoint();
     public boolean[] dayWeek;
 
     public static class TimePoint {
@@ -21,8 +21,9 @@ public class AlarmsConfig  {
             return hour;
         }
 
-        public void setHour(int hour) {
+        public int setHour(int hour) {
             this.hour = hour;
+            return hour;
         }
 
         public int getMinute() {
