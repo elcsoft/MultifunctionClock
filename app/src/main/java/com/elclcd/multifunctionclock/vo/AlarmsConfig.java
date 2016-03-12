@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Created by 123 on 2016/3/10.
  */
-public class AlarmsConfig implements Serializable{
+public class AlarmsConfig  {
 
     public boolean enabled;
     public TimePoint powerOffTime=new TimePoint();

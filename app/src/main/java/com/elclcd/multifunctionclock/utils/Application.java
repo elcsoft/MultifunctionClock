@@ -1,23 +1,17 @@
 package com.elclcd.multifunctionclock.utils;
 
-
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-
 import com.elclcd.multifunctionclock.R;
-
 
 /**
  * Created by elc-06 on 2016/3/11.
  */
 
 
-
-
 public class Application {
-
 
     /**
      2  * 获取版本号
@@ -25,11 +19,9 @@ public class Application {
      4  */
     public static int getVersion(Context context) {
 
-
         PackageInfo info=getPackageInfo(context);
         return info.versionCode;
-    }
-
+         }
 
     /**
      * 获取本地软件版本名称
@@ -38,10 +30,6 @@ public class Application {
         PackageInfo info=getPackageInfo(context);
         return info.versionName;
     }
-
-
-
-
 
 
 
@@ -55,4 +43,3 @@ public class Application {
         return null;
     }
 }
-

@@ -1,6 +1,5 @@
 package com.elclcd.multifunctionclock;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,12 +12,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-
 import com.elclcd.multifunctionclock.handler.Alarms;
 import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
-
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -26,10 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
 public class MainActivity extends Activity {
-
 
     private TimePicker timePickerlift;
     private TimePicker timePickerright;
@@ -43,13 +37,9 @@ public class MainActivity extends Activity {
     private CheckBox saturday;
 
 
-
-
     private List<CheckBox> list = null;
 
-
     private Alarms alarms=new Alarms();
-
 
     private Button icon_dialog;//点击弹出dialog按钮
     /**
@@ -60,16 +50,15 @@ public class MainActivity extends Activity {
     private TextView codeView;
     private TextView dialog_button;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-
         setContentView(R.layout.activity_main);
         init();
 
+        updateView(Alarms.getConfig(this));//将获取的数据初始化控件状态
 
 //        updateView(Alarms.getConfig(this));//将获取的数据初始化控件状态
         AlarmsConfig config =Alarms.getConfig(this);
@@ -77,11 +66,7 @@ public class MainActivity extends Activity {
             updateView(config);
         }
 
-
-
     }
-
-
 
 
     /**
@@ -91,7 +76,6 @@ public class MainActivity extends Activity {
         //开关
         checkbox = (CheckBox) findViewById(R.id.checkbox);
         checkbox.setOnClickListener(new MyLinsister());
-
 
         //timepicker
         timePickerlift = (TimePicker) findViewById(R.id.timePicker);
@@ -103,8 +87,6 @@ public class MainActivity extends Activity {
         timePickerright.setIs24HourView(true);
         timePickerlift.setOnTimeChangedListener(new timeChangedLinsister());
         timePickerright.setOnTimeChangedListener(new timeChangedLinsister());
-
-
 
 
         sunday = (CheckBox) findViewById(R.id.checkboxtian);
@@ -122,7 +104,6 @@ public class MainActivity extends Activity {
         monday = (CheckBox) findViewById(R.id.checkboxyi);
         monday.setOnClickListener(new MyLinsister());
 
-
         list = new ArrayList<CheckBox>();
         list.add(monday);
         list.add(tuesday);
@@ -132,15 +113,11 @@ public class MainActivity extends Activity {
         list.add(saturday);
         list.add(sunday);
 
-
         icon_dialog= (Button) findViewById(R.id.icon_dialog);
         icon_dialog.setOnClickListener(new iconLinstener());
 
 
-
-
     }
-
 
     /**
      * 将config数据映射到视图控件
@@ -153,12 +130,10 @@ public class MainActivity extends Activity {
         }
         isOrNotCheck();//当开关开启才能操作其他控件
 
-
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setChecked(config.getDayWeek()[i]);
         }
         //设置控件当前显示的时间
-
 
         timePickerlift.setCurrentHour(config.getPowerOnTime().getHour());
         timePickerlift.setCurrentMinute(config.getPowerOnTime().getMinute());
@@ -166,23 +141,7 @@ public class MainActivity extends Activity {
         timePickerright.setCurrentMinute(config.getPowerOffTime().getMinute());
 
 
-
-
-//        String command="/system/xbin/test 201603111655 201603111658 enable";
-//        try {
-//            Process p=Runtime.getRuntime().exec("su");
-//            DataOutputStream dos = new DataOutputStream(p.getOutputStream());
-//            dos.writeBytes(command + "\n");
-//            dos.flush();
-//            dos.writeBytes("exit\n");
-//            dos.flush();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
     }
-
 
     /**
      * 从视图控件搜集数据生成AlarmsConfig对象返回
@@ -197,7 +156,6 @@ public class MainActivity extends Activity {
         }else{
             config.setEnablen(false);
         }
-
 
         for (int i=0;i<list.size();i++){
             if(list.get(i).isChecked()){
@@ -218,12 +176,8 @@ public class MainActivity extends Activity {
         timePoint2.setMinute(timePickerright.getCurrentMinute());
         config.setPowerOffTime(timePoint2);
 
-
         return config;
     }
-
-
-
 
 
 
@@ -238,7 +192,6 @@ public class MainActivity extends Activity {
         }
     }
 
-
     /**
      *
      */
@@ -249,20 +202,16 @@ public class MainActivity extends Activity {
         }
     }
 
-
     /**
      * dialog
      */
     private void dialogs(){
 
-
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         mAlertDialog = builder.create();
 
-
         LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
         View view = inflater.inflate(R.layout.dialog_layout, null);
-
 
         verView= (TextView)view.findViewById(R.id.dialog_text_ver);
         codeView= (TextView) view.findViewById(R.id.dialog_text_code);
@@ -272,7 +221,6 @@ public class MainActivity extends Activity {
         mAlertDialog.getWindow().setLayout(320, 340);
         mAlertDialog.setCanceledOnTouchOutside(false);//dialog之外的地方不可点击
 
-
         dialog_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -280,15 +228,12 @@ public class MainActivity extends Activity {
             }
         });
 
-
         String ver=Application.getLocalVersionName(MainActivity.this);
         int code=Application.getVersion(MainActivity.this);
         verView.setText(ver);
         codeView.setText(code+"");
 
-
     }
-
 
     /**
      * timepicker监听
@@ -297,12 +242,9 @@ public class MainActivity extends Activity {
         @Override
         public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 
-
             alarms.saveConfig(MainActivity.this,createAlarmsConfig());
         }
     }
-
-
 
 
     /**
@@ -310,7 +252,6 @@ public class MainActivity extends Activity {
      */
     private void isOrNotCheck() {
         if (checkbox.isChecked()) {
-
 
             for (CheckBox box:list){
                 box.setEnabled(true);
@@ -328,4 +269,3 @@ public class MainActivity extends Activity {
 
 
 }
-

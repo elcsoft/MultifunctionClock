@@ -42,28 +42,27 @@ public class Alarms {
      * @param config
      */
     public static void saveConfig(Context context, AlarmsConfig config) {
-        //resetConfig();、
+//resetConfig();、
         SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =sharePre.edit();
         editor.putBoolean("checkbox", config.isEnabled());
 
-
         for (int i=0;i<weeks.length;i++){
             editor.putBoolean(weeks[i],config.getDayWeek()[i]);
         }
-
 
         editor.putInt("timeOnHour", config.getPowerOnTime().getHour());
         editor.putInt("timeOnMinute", config.getPowerOnTime().getMinute());
         editor.putInt("timeOffHour", config.getPowerOffTime().getHour());
         editor.putInt("timeOffMinute", config.getPowerOffTime().getMinute());
 
-
         editor.commit();
 
+        resetConfig(config);
 
-        resetConfig(context,config);
 
+
+        //resetConfig();、
     }
 
     /**
@@ -73,10 +72,7 @@ public class Alarms {
      * @return
      */
     public static AlarmsConfig getConfig(Context context) {
-
         boolean[] week=new boolean[7];
-
-
 
 
         SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
@@ -87,17 +83,15 @@ public class Alarms {
         }
         alarmsConfig.setDayWeek(week);
         AlarmsConfig.TimePoint timePoint=new AlarmsConfig.TimePoint();
-        timePoint.setHour(sharePre.getInt("timeOnHour", 0));
+        timePoint.setHour(sharePre.getInt("timeOnHour",0));
         timePoint.setMinute(sharePre.getInt("timeOnMinute", 0));
         alarmsConfig.setPowerOnTime(timePoint);
         AlarmsConfig.TimePoint timePoint2=new AlarmsConfig.TimePoint();
-        timePoint2.setHour(sharePre.getInt("timeOffHour", 0));
-        timePoint2.setMinute(sharePre.getInt("timeOffMinute", 0));
+        timePoint2.setHour(sharePre.getInt("timeOffHour",0));
+        timePoint2.setMinute(sharePre.getInt("timeOffMinute",0));
         alarmsConfig.setPowerOffTime(timePoint2);
 
-
         return alarmsConfig;
-
 
     }
 
@@ -112,6 +106,11 @@ public class Alarms {
         //TODO 计算时间
         //TODO 生成命令
         //开机关机
+//        Log.e("", "resetConfig " + config);
+//        Log.e("", "result： " + config);
+//        if(true)
+//            return false;
+        config1=config;
         AlarmsConfig.TimePoint timeOn = config.getPowerOnTime();
         AlarmsConfig.TimePoint timeOff = config.getPowerOffTime();
 //        boolean b = judgmentTimeStyle(timeOn, timeOff);
@@ -229,7 +228,7 @@ public class Alarms {
         time[3]=hour;
         time[4]=mintue;
         return time;
-    }
+
 
     private static String getTime(AlarmsConfig.TimePoint time, AlarmsConfig config,int n) {
         Calendar c = Calendar.getInstance();
