@@ -119,24 +119,30 @@ public class Alarms {
 ////            OpenAlarm(context, timeOn, config);
 //
 //        }
+        int y=0;
         String onCommand = getTime(timeOn, config, 0);//正常无额外添加天数
         String offCommand = getTime(timeOff, config,0);
         boolean b=judgmentTimeStyle(onCommand,offCommand);
         if(b==true){
             int n=getDiffentDay(offCommand);
             Log.i("test","n:"+n);
+            n+=1;//把关机的第二天
             onCommand=getTime(timeOn, config, n);
             Log.i("test","onCommand1:"+onCommand);
         }
         Log.i("test","onCommand:"+onCommand);
         String command = getCommond(onCommand, offCommand);
         Log.i("test", command);
-//        CmdExecuter executer = new CmdExecuter();
-//        Boolean b1=config.isEnabled();
-//        if(b1==true){
-//            executer.exec(command);
-////            return  true;
-//        }
+        CmdExecuter executer = new CmdExecuter();
+        Boolean b1=config.isEnabled();
+        if(b1==true){
+            command.replaceAll("disable","enable");
+            executer.exec(command);
+//            return  true;
+        }
+        else{
+            command.replaceAll("enable","diable");
+        }
 //        return  false;
 
         Log.i("-----------",command);
@@ -270,12 +276,19 @@ public class Alarms {
         if (discrepancy == 0) {
             Boolean b = isNeedToTomorrow(time);
             if (b == true) {
-                //如果今天设定的时间小于当前的时间，则用明天设定的时间来计算差异时间
 //                times[2]=day+1;
-
-                int discrepancy1 = findRightDay(config,1+n);
-                Log.i("test",discrepancy1+" d1");
-                times[2] = day+1+discrepancy1+n;
+                if(n>0){
+                    //如果n>0;则说明开机时间小于关机时间，因为n是关机时间与当前时间差值的第二天，所以判断的时候不用在加1.
+                    int discrepancy1 = findRightDay(config,n);
+                    Log.i("test",discrepancy1+" d1");
+                    times[2] = day+discrepancy1+n;
+                }
+               else {
+                    //如果今天设定的时间小于当前的时间，则用明天设定的时间来计算差异时间
+                        int discrepancy1 = findRightDay(config,1);
+                        Log.i("test",discrepancy1+" d3");
+                        times[2] = day+1+discrepancy1;
+                }
 
             } else {
                 times[2] = day+n;
@@ -338,7 +351,7 @@ public class Alarms {
         }
         boolean[] b = config.getDayWeek();
         int index ;
-        for (index = 0; index < 8; index++) {
+        for (index = 0; index < 7; index++) {
             if (b[todayIndex] == true) {
                 break;
             } else {
