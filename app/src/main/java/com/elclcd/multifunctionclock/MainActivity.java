@@ -17,8 +17,6 @@ import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,10 +76,11 @@ public class MainActivity extends Activity {
         timePickerlift = (TimePicker) findViewById(R.id.timePicker);
         timePickerright = (TimePicker) findViewById(R.id.timePicker2);
         TimePickerSize timeSize = new TimePickerSize();
-        timeSize.resizePikcer(timePickerlift);
-        timeSize.resizePikcer(timePickerright);
         timePickerlift.setIs24HourView(true);
         timePickerright.setIs24HourView(true);
+//        timeSize.resizePikcer(timePickerlift);
+//        timeSize.resizePikcer(timePickerright);
+
         timePickerlift.setOnTimeChangedListener(new timeChangedLinsister());
         timePickerright.setOnTimeChangedListener(new timeChangedLinsister());
 
@@ -114,6 +113,13 @@ public class MainActivity extends Activity {
         icon_dialog.setOnClickListener(new iconLinstener());
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        timePickerlift.setIs24HourView(true);
+//        timePickerright.setIs24HourView(true);
     }
 
     /**
