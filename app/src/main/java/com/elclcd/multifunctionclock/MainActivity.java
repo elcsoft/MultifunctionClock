@@ -78,8 +78,15 @@ public class MainActivity extends Activity {
         TimePickerSize timeSize = new TimePickerSize();
         timePickerlift.setIs24HourView(true);
         timePickerright.setIs24HourView(true);
-//        timeSize.resizePikcer(timePickerlift);
-//        timeSize.resizePikcer(timePickerright);
+
+        timePickerlift.setSaveFromParentEnabled(false);
+        timePickerlift.setSaveEnabled(true);
+
+        timePickerright.setSaveFromParentEnabled(false);
+        timePickerright.setSaveEnabled(true);
+
+        timeSize.resizePikcer(timePickerlift);
+        timeSize.resizePikcer(timePickerright);
 
         timePickerlift.setOnTimeChangedListener(new timeChangedLinsister());
         timePickerright.setOnTimeChangedListener(new timeChangedLinsister());
