@@ -32,6 +32,8 @@ public class Application {
     }
 
 
+
+
     private static PackageInfo getPackageInfo(Context ctx){
         try {
             return ctx.getApplicationContext().getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
