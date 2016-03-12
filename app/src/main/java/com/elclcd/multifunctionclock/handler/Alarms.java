@@ -58,7 +58,7 @@ public class Alarms {
 
         editor.commit();
 
-        resetConfig(config);
+        resetConfig(context,config);
 
 
 
@@ -110,7 +110,7 @@ public class Alarms {
 //        Log.e("", "result： " + config);
 //        if(true)
 //            return false;
-        config1=config;
+//        config1=config;
         AlarmsConfig.TimePoint timeOn = config.getPowerOnTime();
         AlarmsConfig.TimePoint timeOff = config.getPowerOffTime();
 //        boolean b = judgmentTimeStyle(timeOn, timeOff);
@@ -216,18 +216,19 @@ public class Alarms {
 
     //把字符串拆成年月日等的整形
     private static int[] commandToTime(String command) {
-        int [] time =new int[5];
-        int year=Integer.parseInt(command.substring(0,4));
-        int moonth=Integer.parseInt(command.substring(4,6));
-        int day=Integer.parseInt(command.substring(6,8));
-        int hour =Integer.parseInt(command.substring(8,10));
-        int mintue =Integer.parseInt(command.substring(10));
-        time[0]=year;
-        time[1]=moonth;
-        time[2]=day;
-        time[3]=hour;
-        time[4]=mintue;
+        int[] time = new int[5];
+        int year = Integer.parseInt(command.substring(0, 4));
+        int moonth = Integer.parseInt(command.substring(4, 6));
+        int day = Integer.parseInt(command.substring(6, 8));
+        int hour = Integer.parseInt(command.substring(8, 10));
+        int mintue = Integer.parseInt(command.substring(10));
+        time[0] = year;
+        time[1] = moonth;
+        time[2] = day;
+        time[3] = hour;
+        time[4] = mintue;
         return time;
+    }
 
 
     private static String getTime(AlarmsConfig.TimePoint time, AlarmsConfig config,int n) {
