@@ -17,8 +17,6 @@ import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +34,7 @@ public class MainActivity extends Activity {
     private CheckBox friday;
     private CheckBox saturday;
 
-
     private List<CheckBox> list = null;
-
-    private Alarms alarms=new Alarms();
 
     private Button icon_dialog;//点击弹出dialog按钮
     /**
@@ -58,8 +53,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         init();
 
-        updateView(Alarms.getConfig(this));//将获取的数据初始化控件状态
-
+        AlarmsConfig config=Alarms.getConfig(this);
+        if(config!=null){
+            Alarms.saveConfig(this,config);
+            updateView(config);
+        }
 
     }
 
@@ -162,6 +160,7 @@ public class MainActivity extends Activity {
             config.setEnablen(true);
         }else{
             config.setEnablen(false);
+
         }
 
         for (int i=0;i<list.size();i++){
@@ -195,7 +194,7 @@ public class MainActivity extends Activity {
             if(v.getId()==R.id.checkbox){
                 isOrNotCheck();
             }
-            alarms.saveConfig(MainActivity.this,createAlarmsConfig());
+            Alarms.saveConfig(MainActivity.this,createAlarmsConfig());
         }
     }
 
@@ -249,7 +248,7 @@ public class MainActivity extends Activity {
         @Override
         public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 
-            alarms.saveConfig(MainActivity.this,createAlarmsConfig());
+            Alarms.saveConfig(MainActivity.this,createAlarmsConfig());
         }
     }
 
