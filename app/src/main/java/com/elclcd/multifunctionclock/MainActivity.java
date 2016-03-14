@@ -122,12 +122,6 @@ public class MainActivity extends Activity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        timePickerlift.setIs24HourView(true);
-//        timePickerright.setIs24HourView(true);
-    }
 
     /**
      * 将config数据映射到视图控件
