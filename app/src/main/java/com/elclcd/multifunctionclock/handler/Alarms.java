@@ -369,7 +369,7 @@ public class Alarms {
     //判断最近要开关机的一天与今天的相差数
     private static int findRightDay(AlarmsConfig config,int  addtime) {
         Calendar c = Calendar.getInstance();
-        int todayIndex = c.get(Calendar.DAY_OF_WEEK) - 2+addtime;//今天的星期在数组中的下标
+        int todayIndex = c.get(Calendar.DAY_OF_WEEK) - 1+addtime;//今天的星期在数组中的下标
         if (todayIndex >= 7) {
             todayIndex -= 7;
         }
