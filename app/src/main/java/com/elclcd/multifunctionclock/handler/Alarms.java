@@ -10,9 +10,11 @@ import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.elclcd.multifunctionclock.MainActivity;
 import com.elclcd.multifunctionclock.utils.CmdExecuter;
+import com.elclcd.multifunctionclock.utils.Constant;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
 import java.io.Serializable;
@@ -30,10 +32,12 @@ import static com.elclcd.multifunctionclock.vo.AlarmsConfig.*;
  */
 public class Alarms {
 
-    private static String onCommand;//开机时间
 //    private static AlarmsConfig  config1;
-
     private static String[] weeks={"monday","tuesday","wednesday","thursday","friday","staturday","sunday"};
+    private static String offCommand;//关机命令
+    public static  final int WarningTime=1;//警告时间
+    private static AlarmManager manager;
+    private static PendingIntent sender;
 
     /**
      * 保存配置
@@ -96,6 +100,39 @@ public class Alarms {
 
     }
 
+    //发送定时广播
+    private   static void setAlarmManger(Context context){
+       Log.i("test","222");
+        SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmm");
+        try {
+            String time=getTheWarningTime();
+            Date date =f.parse(time);
+            long d=date.getTime();
+            Log.i("test", String.valueOf(d));
+            Calendar calendar=Calendar.getInstance();
+//            calendar.setTimeInMillis(System.currentTimeMillis());//参数是毫秒值
+//		    calendar.add(Calendar.SECOND,10);
+
+            calendar.setTime(date);
+            long ct=System.currentTimeMillis();
+            Log.i("test",String.valueOf(ct));
+
+		    manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static String getTheWarningTime() {
+        String time1 = offCommand.substring(0, 10);
+        int mintue = Integer.parseInt(offCommand.substring(10));
+        mintue-=WarningTime;
+        StringBuilder sb=new StringBuilder(time1);
+        sb.append(mintue);
+        return  sb.toString();
+    }
+
     /**
      * 重置配置，更新开关机服务
      *
@@ -107,46 +144,40 @@ public class Alarms {
         //TODO 计算时间
         //TODO 生成命令
         //开机关机
-//        Log.e("", "resetConfig " + config);
-//        Log.e("", "result： " + config);
-//        if(true)
-//            return false;
-//        config1=config;
+
+        Intent intent=new Intent(Constant.AlarmReceiverSend);
+        sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
         AlarmsConfig.TimePoint timeOn = config.getPowerOnTime();
         AlarmsConfig.TimePoint timeOff = config.getPowerOffTime();
-//        boolean b = judgmentTimeStyle(timeOn, timeOff);
-//        if (b == true) {//开始时间小于结束时间
-////            OpenAlarm(context, timeOn, config);
-//
-//        }
+
         int y=0;
         String onCommand = getTime(timeOn, config, 0);//正常无额外添加天数
-        String offCommand = getTime(timeOff, config,0);
+        offCommand = getTime(timeOff, config,0);
         boolean b=judgmentTimeStyle(onCommand,offCommand);
         if(b==true){
             int n=getDiffentDay(offCommand);
-            Log.i("test","n:"+n);
             n+=1;//把关机的第二天
             onCommand=getTime(timeOn, config, n);
-            Log.i("test","onCommand1:"+onCommand);
         }
-        Log.i("test","onCommand:"+onCommand);
         String command = getCommond(onCommand, offCommand);
-        Log.i("test", command);
         CmdExecuter executer = new CmdExecuter();
         Boolean b1=config.isEnabled();
         if(b1==true){
-            command.replaceAll("disable","enable");
-            executer.exec(command);
+            Log.i("test","111");
+            setAlarmManger(context);
+            command=command.replaceAll("disable","enable");
+            Log.i("test",command);
 //            return  true;
         }
         else{
-            command.replaceAll("enable","diable");
+            manager.cancel(sender);
+            command=command.replaceAll("enable", "disable");
+
         }
+//        executer.exec(command);
 //        return  false;
-
-        Log.i("-----------",command);
-
         return command;
     }
 
@@ -172,8 +203,6 @@ public class Alarms {
 //                return true;
 //            }
 //        }
-        Log.i("test",onCommand);
-        Log.i("test",offCommand);
         int [] open=commandToTime(onCommand);//201603150102
         int [] close=commandToTime(offCommand);//201603151102
         boolean b=Compare(open,close);
@@ -272,7 +301,6 @@ public class Alarms {
         int discrepancy = findRightDay(config,n);
         times[0] = year;
         times[1] = month;
-        Log.i("test",discrepancy+" d");
         if (discrepancy == 0) {
             Boolean b = isNeedToTomorrow(time);
             if (b == true) {
@@ -280,13 +308,11 @@ public class Alarms {
                 if(n>0){
                     //如果n>0;则说明开机时间小于关机时间，因为n是关机时间与当前时间差值的第二天，所以判断的时候不用在加1.
                     int discrepancy1 = findRightDay(config,n);
-                    Log.i("test",discrepancy1+" d1");
                     times[2] = day+discrepancy1+n;
                 }
                else {
                     //如果今天设定的时间小于当前的时间，则用明天设定的时间来计算差异时间
                         int discrepancy1 = findRightDay(config,1);
-                        Log.i("test",discrepancy1+" d3");
                         times[2] = day+1+discrepancy1;
                 }
 
@@ -363,6 +389,11 @@ public class Alarms {
         }
         return index;
     }
+
+
+
+
+
 
 //    //  定时发送广播激活服务
 //    private static void OpenAlarm(Context context, AlarmsConfig.TimePoint timeOn, AlarmsConfig config) {
