@@ -24,4 +24,10 @@
     <string name="dialog_button">FERME</string>
 
 
+    <string name="title_activity_warning_time_dialog">WarningTimeDialogActivity</string>
+    <string name="warning">&#032;&#032;&#032;&#032;&#032;&#032;&#032;&#032;离关机时间已经不足1分钟，请做好保存工作，防止数据丢失。</string>
+    <string name="notice">温馨提示</string>
+    <string name="Iknow">我已经知道</string>
+    <string name="notclose">暂时不关机</string>
+
 </resources>

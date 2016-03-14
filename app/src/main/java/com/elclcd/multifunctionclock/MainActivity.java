@@ -3,6 +3,7 @@ package com.elclcd.multifunctionclock;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TimePicker;
 
 import com.elclcd.multifunctionclock.handler.Alarms;
 import com.elclcd.multifunctionclock.utils.Application;
+import com.elclcd.multifunctionclock.utils.Constant;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
@@ -79,6 +81,7 @@ public class MainActivity extends Activity {
         timePickerlift.setIs24HourView(true);
         timePickerright.setIs24HourView(true);
 
+
         timePickerlift.setSaveFromParentEnabled(false);
         timePickerlift.setSaveEnabled(true);
 
@@ -132,7 +135,7 @@ public class MainActivity extends Activity {
         if (config.isEnabled()) {
             checkbox.setChecked(true);
         }
-        isOrNotCheck();//当开关开启才能操作其他控件
+        isOrNotCheck();//周期时间的组件是否可用（开启定时开机和关机的checkbox）
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setChecked(config.getDayWeek()[i]);
@@ -283,5 +286,12 @@ public class MainActivity extends Activity {
         }
     }
 
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String action=intent.getAction();
+        if(action.equals(Constant.CancelClose)){
+            checkbox.setChecked(false);
+        }
+    }
 }

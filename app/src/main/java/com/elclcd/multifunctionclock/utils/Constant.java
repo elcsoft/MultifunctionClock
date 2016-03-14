@@ -7,4 +7,5 @@ import com.elclcd.multifunctionclock.handler.AlarmReceiver;
  */
 public class Constant {
     public static final String AlarmReceiverSend="AlarmReceiver.send";
+    public static  final  String CancelClose="cancelclose";
 }

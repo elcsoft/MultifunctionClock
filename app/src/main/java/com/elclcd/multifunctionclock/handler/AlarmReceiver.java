@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.elclcd.multifunctionclock.utils.Constant;
+import com.elclcd.multifunctionclock.WarningTimeDialogActivity;
 
 /**
  * Created by 123 on 2016/3/14.
@@ -18,11 +18,16 @@ import com.elclcd.multifunctionclock.utils.Constant;
             if (action.equals(Constant.AlarmReceiverSend)) {
                 StringBuilder sb = new StringBuilder("离关机时间还有");
                 sb.append(Alarms.WarningTime);
-                sb.append("分钟，请即使保存你的工作  ");
-                Log.i("test",sb.toString());
-                Toast.makeText(context, sb.toString(), Toast.LENGTH_SHORT).show();
+                sb.append("分钟，请及时保存你的工作，准备关机");
+                Log.i("test", sb.toString());
+
+                Intent intent1=new Intent(context, WarningTimeDialogActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                context.startActivity(intent1);
 
             }
 
         }
+
+
 }

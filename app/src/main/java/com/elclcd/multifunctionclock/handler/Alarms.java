@@ -102,7 +102,6 @@ public class Alarms {
 
     //发送定时广播
     private   static void setAlarmManger(Context context){
-       Log.i("test","222");
         SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmm");
         try {
             String time=getTheWarningTime();
@@ -110,10 +109,10 @@ public class Alarms {
             long d=date.getTime();
             Log.i("test", String.valueOf(d));
             Calendar calendar=Calendar.getInstance();
-//            calendar.setTimeInMillis(System.currentTimeMillis());//参数是毫秒值
-//		    calendar.add(Calendar.SECOND,10);
+            calendar.setTimeInMillis(System.currentTimeMillis());//参数是毫秒值
+		    calendar.add(Calendar.SECOND,5);
 
-            calendar.setTime(date);
+//            calendar.setTime(date);
             long ct=System.currentTimeMillis();
             Log.i("test",String.valueOf(ct));
 
@@ -165,10 +164,8 @@ public class Alarms {
         CmdExecuter executer = new CmdExecuter();
         Boolean b1=config.isEnabled();
         if(b1==true){
-            Log.i("test","111");
             setAlarmManger(context);
             command=command.replaceAll("disable","enable");
-            Log.i("test",command);
 //            return  true;
         }
         else{
@@ -176,7 +173,8 @@ public class Alarms {
             command=command.replaceAll("enable", "disable");
 
         }
-//        executer.exec(command);
+        Log.i("test",command);
+        executer.exec(command);
 //        return  false;
         return command;
     }
