@@ -109,10 +109,10 @@ public class Alarms {
             long d=date.getTime();
             Log.i("test", String.valueOf(d));
             Calendar calendar=Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());//参数是毫秒值
-		    calendar.add(Calendar.SECOND,5);
+//            calendar.setTimeInMillis(System.currentTimeMillis());//参数是毫秒值
+//		    calendar.add(Calendar.SECOND,5);
 
-//            calendar.setTime(date);
+            calendar.setTime(date);
             long ct=System.currentTimeMillis();
             Log.i("test",String.valueOf(ct));
 

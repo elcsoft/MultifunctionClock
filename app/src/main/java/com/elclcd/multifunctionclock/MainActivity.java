@@ -64,10 +64,9 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
         init();
-        if(thread==null){
-            chickTime();
-        }
-
+//        if(thread==null){
+//            chickTime();
+//        }
 
         AlarmsConfig config = Alarms.getConfig(this);
         if (config != null) {
@@ -198,9 +197,7 @@ public class MainActivity extends Activity {
             } else {
                 weeks[i] = false;
             }
-            else{
-                weeks[i]=false;
-            }
+
         }
         config.setDayWeek(weeks);
         //获取timepick的时间
@@ -310,68 +307,68 @@ public class MainActivity extends Activity {
         }
     }
 
-    /**
-     * 开启一个线程，判断时间是否为设定的时间
-     */
-
-    public void chickTime() {
-
-
-        final Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-
-                showRemindDialog();
-                super.handleMessage(msg);
-            }
-        };
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                try {
-                    Calendar calendar = Calendar.getInstance();
-                    //判断当前时间是否为设定时间前5分钟
-                    if( calendar.getTime().getMinutes()==newMinute-1&&calendar.getTime().getHours()==newHour){
-                    //弹出提示对话框
-                            Message message=handler.obtainMessage();
-                            handler.sendMessage(message);
-                    }
-                    Log.i("-----", "---------"+newMinute);
-                    Thread.sleep(1000*60);//休眠5秒
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                }
-            }
-        });
-        thread.start();
-
-    }
-
-    //提醒对话框
-    public void showRemindDialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-        dialog.create().setCanceledOnTouchOutside(false);
-        dialog.setTitle("提示");
-        dialog.setMessage("还有1分钟关机，是否继续执行此操作？");
-        dialog.setPositiveButton("确定", new Dialog.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        dialog.show();
-
-    }
+//    /**
+//     * 开启一个线程，判断时间是否为设定的时间
+//     */
+//
+//    public void chickTime() {
+//
+//
+//        final Handler handler = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//
+//                showRemindDialog();
+//                super.handleMessage(msg);
+//            }
+//        };
+//        thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true){
+//                try {
+//                    Calendar calendar = Calendar.getInstance();
+//                    //判断当前时间是否为设定时间前5分钟
+//                    if( calendar.getTime().getMinutes()==newMinute-1&&calendar.getTime().getHours()==newHour){
+//                    //弹出提示对话框
+//                            Message message=handler.obtainMessage();
+//                            handler.sendMessage(message);
+//                    }
+//                    Log.i("-----", "---------"+newMinute);
+//                    Thread.sleep(1000*60);//休眠5秒
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                }
+//            }
+//        });
+//        thread.start();
+//
+//    }
+//
+//    //提醒对话框
+//    public void showRemindDialog() {
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+//        dialog.create().setCanceledOnTouchOutside(false);
+//        dialog.setTitle("提示");
+//        dialog.setMessage("还有1分钟关机，是否继续执行此操作？");
+//        dialog.setPositiveButton("确定", new Dialog.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//
+//        dialog.show();
+//
+//    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -379,6 +376,9 @@ public class MainActivity extends Activity {
         String action=intent.getAction();
         if(action.equals(Constant.CancelClose)){
             checkbox.setChecked(false);
+            AlarmsConfig config = createAlarmsConfig();
+            Alarms.saveConfig(MainActivity.this, config);
+
         }
     }
 }

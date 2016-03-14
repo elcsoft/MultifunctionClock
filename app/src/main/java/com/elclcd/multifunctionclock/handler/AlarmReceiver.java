@@ -16,10 +16,7 @@ import com.elclcd.multifunctionclock.WarningTimeDialogActivity;
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(Constant.AlarmReceiverSend)) {
-                StringBuilder sb = new StringBuilder("离关机时间还有");
-                sb.append(Alarms.WarningTime);
-                sb.append("分钟，请及时保存你的工作，准备关机");
-                Log.i("test", sb.toString());
+                Log.i("test", "111");
 
                 Intent intent1=new Intent(context, WarningTimeDialogActivity.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
