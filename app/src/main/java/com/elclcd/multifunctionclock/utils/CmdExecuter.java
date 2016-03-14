@@ -29,65 +29,64 @@ public class CmdExecuter {
             dos.flush();
             String line = null;
 
-//            new Thread() {
-//                public BufferedReader Reader1;
-//
-//                @Override
-//                public void run() {
-//                    try {
-//                        Reader1 = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//                        String line = null;
-//
-//                        while ((line = Reader1.readLine()) != null) {
-//                            Log.e("MainActivity", "---result :" + line);
-//                        }
-//                    } catch (IOException e) {
-//                        Log.e("MainActivity", "--error :", e);
-//                        e.printStackTrace();
-//
-//                    }
-//                    finally {
-//                        if(Reader1!=null){
-//                            try {
-//                                Reader1.close();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            }.start();
-            ///system/xbin/test 201603101333 201603101332 enable
-//            new Thread() {
-//                public BufferedReader Reader1;
-//
-//                @Override
-//                public void run() {
-//                    try {
-//                        Reader1 = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-//                        String line = null;
-//
-//                        while ((line = Reader1.readLine()) != null) {
-//                            Log.e("MainActivity", "---error :" + line);
-//                        }
-//                    } catch (IOException e) {
-//                        Log.e("MainActivity", "--error :", e);
-//                        e.printStackTrace();
-//
-//                    }
-//                    finally {
-//                        if(Reader1!=null){
-//                            try {
-//                                Reader1.close();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            }.start();
+            new Thread() {
+                public BufferedReader Reader1;
+
+                @Override
+                public void run() {
+                    try {
+                        Reader1 = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                        String line = null;
+
+                        while ((line = Reader1.readLine()) != null) {
+                            Log.e("MainActivity", "---result :" + line);
+                        }
+                    } catch (IOException e) {
+                        Log.e("MainActivity", "--error :", e);
+                        e.printStackTrace();
+
+                    }
+                    finally {
+                        if(Reader1!=null){
+                            try {
+                                Reader1.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+            }.start();
+            new Thread() {
+                public BufferedReader Reader1;
+
+                @Override
+                public void run() {
+                    try {
+                        Reader1 = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+                        String line = null;
+
+                        while ((line = Reader1.readLine()) != null) {
+                            Log.e("MainActivity", "---error :" + line);
+                        }
+                    } catch (IOException e) {
+                        Log.e("MainActivity", "--error :", e);
+                        e.printStackTrace();
+
+                    }
+                    finally {
+                        if(Reader1!=null){
+                            try {
+                                Reader1.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+            }.start();
 
         } catch (IOException e) {
             Log.e("MainActivity", "---error :", e);

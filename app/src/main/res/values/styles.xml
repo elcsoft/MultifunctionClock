@@ -12,6 +12,8 @@
     </style>
 
 
+
+
     <style name="TextTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:textSize">25sp</item>
