@@ -39,6 +39,9 @@ public class Alarms {
     private static String onCommand;//开机命令
     private static Context context1;
     private static AlarmsConfig config1;
+    private static PendingIntent sender1;
+    private static PendingIntent sender2;
+    private static AlarmManager manager;
 
     /**
      * 保存配置
@@ -82,8 +85,6 @@ public class Alarms {
         
         SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
 
-        SharedPreferences sharePre = context.getSharedPreferences("times", Context.MODE_PRIVATE);
-
         AlarmsConfig alarmsConfig = new AlarmsConfig();
         alarmsConfig.setEnablen(sharePre.getBoolean("checkbox", false));
         for (int i = 0; i < weeks.length; i++) {
@@ -105,11 +106,7 @@ public class Alarms {
 
     //发送定时广播 是警告时间
     private   static void setAlarmManger(Context context,boolean isneed){
-        Intent intent1=new Intent(Constant.WarnTime);
-        Intent intent2=new Intent(Constant.ResetCommand);
-        PendingIntent sender1 = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent sender2 = PendingIntent.getBroadcast(context, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+       
         SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmm");
         try {
             if(isneed==true){
@@ -156,44 +153,49 @@ public class Alarms {
      * @param config
      * @return 返回程序的状态，true 执行 ，false 不执行
      */
-    public static String resetConfig(Context context, AlarmsConfig config) {
+    public static void resetConfig(Context context, AlarmsConfig config) {
         //TODO 计算时间
         //TODO 生成命令
         //开机关机
         config1=config;
         context1=context;
+        Intent intent1=new Intent(Constant.WarnTime);
+        Intent intent2=new Intent(Constant.ResetCommand);
+        sender1 = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        sender2 = PendingIntent.getBroadcast(context, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+        manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         AlarmsConfig.TimePoint timeOn = config.getPowerOnTime();
         AlarmsConfig.TimePoint timeOff = config.getPowerOffTime();
         boolean weeks[] =config.getDayWeek();
         boolean b1=NoWeekChoosed(weeks);
-        if(b1==true){
-            Log.i("test","您还没有选星期，请记得选择");
-            return "您还没有选择星期，请记得选择";
-        }
-        else {
+
             onCommand = getTime(timeOn, config);//正常无额外添加天数
             offCommand = getTime(timeOff, config);
-            boolean b2 =judgmentTimeStyle(onCommand, offCommand);
-            if(b2==true){
-                setAlarmManger(context,false);
+            boolean b2 = judgmentTimeStyle(onCommand, offCommand);
+            if (b2 == true) {
+                setAlarmManger(context, false);
             }
             String command = getCommond(onCommand, offCommand);
             CmdExecuter executer = new CmdExecuter();
-            Boolean b3=config.isEnabled();//开关机功能是否可用
-            if(b3==true){
-                setAlarmManger(context,true);
-                command=command.replaceAll("disable","enable");
+            Boolean b3 = config.isEnabled();//开关机功能是否可用
+            if (b3 == true) {
+               if (b1!=true){
+                   setAlarmManger(context, true);
+                   command = command.replaceAll("disable", "enable");
+               }
+               else {
+                   command = command.replaceAll("enable", "disable");
+                   manager.cancel(sender1);
+               }
 
-            }
-            else{
-                command=command.replaceAll("enable", "disable");
-
+            } else {
+                command = command.replaceAll("enable", "disable");
+                manager.cancel(sender1);
             }
             Log.i("test", command);
             executer.exec(command);
 
-            return command;
-        }
+
 
     }
 
@@ -266,7 +268,7 @@ public class Alarms {
     //判断相差天数
     private static int findRightDay(AlarmsConfig config,int addtime) {
         Calendar c = Calendar.getInstance();
-        int todayIndex = c.get(Calendar.DAY_OF_WEEK) - 2+addtime;//今天的星期在数组中的下标
+        int todayIndex = c.get(Calendar.DAY_OF_WEEK) - 1+addtime;//今天的星期在数组中的下标
         if (todayIndex >= 7) {
             todayIndex -= 7;
         }

@@ -73,9 +73,9 @@ public class MainActivity extends Activity {
             updateView(config);
         }
 
-        if(thread==null){
-            chickTime();
-        }
+//        if(thread==null){
+//            chickTime();
+//        }
 
 
     }
@@ -311,17 +311,16 @@ public class MainActivity extends Activity {
             AlarmsConfig config = createAlarmsConfig();
             Alarms.saveConfig(MainActivity.this, config);
 
-
-        final Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-
-                Intent intent=new Intent(MainActivity.this,DialogActivity.class);
-                startActivity(intent);
-                super.handleMessage(msg);
-            }
-        };
-        RemindThread.remind(handler);
+//        final Handler handler = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//
+//                Intent intent=new Intent(MainActivity.this,DialogActivity.class);
+//                startActivity(intent);
+//                super.handleMessage(msg);
+//            }
+//        };
+//        RemindThread.remind(handler);
 
 
 
@@ -330,9 +329,9 @@ public class MainActivity extends Activity {
 
 
 
-    @Override
-    protected void onDestroy() {
-        RemindThread.start=false;
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onDestroy() {
+////        RemindThread.start=false;
+//        super.onDestroy();
+//    }
 }

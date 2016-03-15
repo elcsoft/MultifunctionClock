@@ -33,12 +33,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".WarningTimeDialogActivity"
-            android:label="@string/title_activity_warning_time_dialog"
-            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar"
-            >
-        </activity>
     </application>
 
 </manifest>
