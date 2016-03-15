@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,7 @@ import android.widget.TimePicker;
 
 import com.elclcd.multifunctionclock.handler.Alarms;
 import com.elclcd.multifunctionclock.utils.Application;
+import com.elclcd.multifunctionclock.utils.RemindThread;
 import com.elclcd.multifunctionclock.utils.Constant;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
@@ -42,8 +44,6 @@ public class MainActivity extends Activity {
     private CheckBox saturday;
 
     private Thread thread = null;
-    private  static int newMinute;
-    private static  int newHour;
 
 
     private List<CheckBox> list = null;
@@ -64,14 +64,17 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
         init();
-//        if(thread==null){
-//            chickTime();
-//        }
+
+
 
         AlarmsConfig config = Alarms.getConfig(this);
         if (config != null) {
             Alarms.saveConfig(this, config);
             updateView(config);
+        }
+
+        if(thread==null){
+            chickTime();
         }
 
 
@@ -122,13 +125,14 @@ public class MainActivity extends Activity {
         monday.setOnClickListener(new MyLinsister());
 
         list = new ArrayList<CheckBox>();
+        list.add(sunday);
         list.add(monday);
         list.add(tuesday);
         list.add(wednesday);
         list.add(thursday);
         list.add(friday);
         list.add(saturday);
-        list.add(sunday);
+
 
         icon_dialog = (Button) findViewById(R.id.icon_dialog);
         icon_dialog.setOnClickListener(new iconLinstener());
@@ -148,8 +152,7 @@ public class MainActivity extends Activity {
         }
         isOrNotCheck();//当开关开启才能操作其他控件
         if (config != null) {
-            newMinute = config.getPowerOffTime().getMinute();
-            newHour=config.getPowerOffTime().getHour();
+            RemindThread.config=config;
         }
 
         for (int i = 0; i < list.size(); i++) {
@@ -163,18 +166,6 @@ public class MainActivity extends Activity {
         timePickerright.setCurrentMinute(config.getPowerOffTime().getMinute());
 
 
-//        String command="/system/xbin/test 201603111655 201603111658 enable";
-//        try {
-//            Process p=Runtime.getRuntime().exec("su");
-//            DataOutputStream dos = new DataOutputStream(p.getOutputStream());
-//            dos.writeBytes(command + "\n");
-//            dos.flush();
-//            dos.writeBytes("exit\n");
-//            dos.flush();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
     }
 
     /**
@@ -187,9 +178,12 @@ public class MainActivity extends Activity {
         boolean[] weeks = new boolean[7];
         if (checkbox.isChecked()) {
             config.setEnablen(true);
+
         } else {
             config.setEnablen(false);
         }
+
+        RemindThread.config.setEnablen(config.isEnabled());
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isChecked()) {
@@ -197,7 +191,6 @@ public class MainActivity extends Activity {
             } else {
                 weeks[i] = false;
             }
-
         }
         config.setDayWeek(weeks);
         //获取timepick的时间
@@ -205,6 +198,7 @@ public class MainActivity extends Activity {
         timePoint.setHour(timePickerlift.getCurrentHour());
         timePoint.setMinute(timePickerlift.getCurrentMinute());
         config.setPowerOnTime(timePoint);
+
         AlarmsConfig.TimePoint timePoint2 = new AlarmsConfig.TimePoint();
         timePoint2.setHour(timePickerright.getCurrentHour());
         timePoint2.setMinute(timePickerright.getCurrentMinute());
@@ -212,7 +206,6 @@ public class MainActivity extends Activity {
 
         return config;
     }
-
 
 
     //控件的监听事件
@@ -224,6 +217,7 @@ public class MainActivity extends Activity {
             }
             AlarmsConfig config = createAlarmsConfig();
             Alarms.saveConfig(MainActivity.this, config);
+
         }
     }
 
@@ -280,13 +274,10 @@ public class MainActivity extends Activity {
             AlarmsConfig config=createAlarmsConfig();
             Alarms.saveConfig(MainActivity.this, config);
 
-            newMinute = config.getPowerOffTime().getMinute();
-            newHour=config.getPowerOffTime().getHour();
-            Log.i("save", config.getPowerOffTime().getMinute() + "----" + newMinute);
+            RemindThread.config=config;
+
         }
     }
-
-
     /**
      * 当开关开启才能操作，否者不能
      */
@@ -307,68 +298,9 @@ public class MainActivity extends Activity {
         }
     }
 
-//    /**
-//     * 开启一个线程，判断时间是否为设定的时间
-//     */
-//
-//    public void chickTime() {
-//
-//
-//        final Handler handler = new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//
-//                showRemindDialog();
-//                super.handleMessage(msg);
-//            }
-//        };
-//        thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while(true){
-//                try {
-//                    Calendar calendar = Calendar.getInstance();
-//                    //判断当前时间是否为设定时间前5分钟
-//                    if( calendar.getTime().getMinutes()==newMinute-1&&calendar.getTime().getHours()==newHour){
-//                    //弹出提示对话框
-//                            Message message=handler.obtainMessage();
-//                            handler.sendMessage(message);
-//                    }
-//                    Log.i("-----", "---------"+newMinute);
-//                    Thread.sleep(1000*60);//休眠5秒
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                }
-//            }
-//        });
-//        thread.start();
-//
-//    }
-//
-//    //提醒对话框
-//    public void showRemindDialog() {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-//        dialog.create().setCanceledOnTouchOutside(false);
-//        dialog.setTitle("提示");
-//        dialog.setMessage("还有1分钟关机，是否继续执行此操作？");
-//        dialog.setPositiveButton("确定", new Dialog.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//            }
-//        });
-//        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//            }
-//        });
-//
-//        dialog.show();
-//
-//    }
+    /**
+     * 开启一个线程，判断时间是否为设定的时间
+     */
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -379,6 +311,28 @@ public class MainActivity extends Activity {
             AlarmsConfig config = createAlarmsConfig();
             Alarms.saveConfig(MainActivity.this, config);
 
+
+        final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+
+                Intent intent=new Intent(MainActivity.this,DialogActivity.class);
+                startActivity(intent);
+                super.handleMessage(msg);
+            }
+        };
+        RemindThread.remind(handler);
+
+
+
         }
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        RemindThread.start=false;
+        super.onDestroy();
     }
 }

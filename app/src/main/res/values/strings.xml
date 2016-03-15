@@ -23,6 +23,12 @@
     <string name="dialog_code">Code:</string>
     <string name="dialog_button">FERME</string>
 
+    <string name="dialog_activity_message">离关机还有1分钟，是否继续？</string>
+    <string name="dialog_activity_yes">确定</string>
+    <string name="dialog_activity_no">取消</string>
+
+    <string name="remind">提示：</string>
+
 
     <string name="title_activity_warning_time_dialog">WarningTimeDialogActivity</string>
     <string name="warning">&#032;&#032;&#032;&#032;&#032;&#032;&#032;&#032;离关机时间已经不足1分钟，请做好保存工作，防止数据丢失。</string>

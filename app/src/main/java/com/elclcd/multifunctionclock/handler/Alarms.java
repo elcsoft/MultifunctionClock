@@ -32,8 +32,8 @@ import static com.elclcd.multifunctionclock.vo.AlarmsConfig.*;
  */
 public class Alarms {
 
-//    private static AlarmsConfig  config1;
-    private static String[] weeks={"monday","tuesday","wednesday","thursday","friday","staturday","sunday"};
+    //    private static AlarmsConfig  config1;
+    private static String[] weeks = {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "staturday"};
     private static String offCommand;//关机命令
     public static  final int WarningTime=1;//警告时间
     private static String onCommand;//开机命令
@@ -48,12 +48,12 @@ public class Alarms {
      */
     public static void saveConfig(Context context, AlarmsConfig config) {
 //resetConfig();、
-        SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor =sharePre.edit();
+        SharedPreferences sharePre = context.getSharedPreferences("times", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharePre.edit();
         editor.putBoolean("checkbox", config.isEnabled());
 
-        for (int i=0;i<weeks.length;i++){
-            editor.putBoolean(weeks[i],config.getDayWeek()[i]);
+        for (int i = 0; i < weeks.length; i++) {
+            editor.putBoolean(weeks[i], config.getDayWeek()[i]);
         }
 
         editor.putInt("timeOnHour", config.getPowerOnTime().getHour());
@@ -77,22 +77,24 @@ public class Alarms {
      * @return
      */
     public static AlarmsConfig getConfig(Context context) {
-        boolean[] week=new boolean[7];
+        boolean[] week = new boolean[7];
 
         
         SharedPreferences sharePre=context.getSharedPreferences("times", Context.MODE_PRIVATE);
 
+        SharedPreferences sharePre = context.getSharedPreferences("times", Context.MODE_PRIVATE);
+
         AlarmsConfig alarmsConfig = new AlarmsConfig();
         alarmsConfig.setEnablen(sharePre.getBoolean("checkbox", false));
-        for (int i=0;i<weeks.length;i++){
-            week[i]=sharePre.getBoolean(weeks[i],false);
+        for (int i = 0; i < weeks.length; i++) {
+            week[i] = sharePre.getBoolean(weeks[i], false);
         }
         alarmsConfig.setDayWeek(week);
-        AlarmsConfig.TimePoint timePoint=new AlarmsConfig.TimePoint();
+        AlarmsConfig.TimePoint timePoint = new AlarmsConfig.TimePoint();
         timePoint.setHour(sharePre.getInt("timeOnHour", 0));
         timePoint.setMinute(sharePre.getInt("timeOnMinute", 0));
         alarmsConfig.setPowerOnTime(timePoint);
-        AlarmsConfig.TimePoint timePoint2=new AlarmsConfig.TimePoint();
+        AlarmsConfig.TimePoint timePoint2 = new AlarmsConfig.TimePoint();
         timePoint2.setHour(sharePre.getInt("timeOffHour", 0));
         timePoint2.setMinute(sharePre.getInt("timeOffMinute", 0));
         alarmsConfig.setPowerOffTime(timePoint2);
