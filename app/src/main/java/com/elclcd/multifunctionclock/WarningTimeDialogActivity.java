@@ -2,6 +2,8 @@ package com.elclcd.multifunctionclock;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +13,8 @@ import android.view.Window;
 import com.elclcd.multifunctionclock.MainActivity;
 import com.elclcd.multifunctionclock.R;
 import com.elclcd.multifunctionclock.utils.Constant;
+
+import java.util.List;
 
 public class WarningTimeDialogActivity extends Activity {
 
@@ -35,6 +39,8 @@ public class WarningTimeDialogActivity extends Activity {
             finish();
         }
     }
+
+
 
 
 

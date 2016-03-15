@@ -24,7 +24,9 @@
 
         <receiver android:name=".handler.AlarmReceiver" >
             <intent-filter>
-                <action android:name="AlarmReceiver.send" />
+                <action android:name="AlarmReceiver.send.warningtime" />
+                <action android:name="AlarmReceiver.send.resetcommand" />
+
             </intent-filter>
         </receiver>
 
