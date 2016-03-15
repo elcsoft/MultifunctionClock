@@ -308,6 +308,7 @@ public class MainActivity extends Activity {
         String action=intent.getAction();
         if(action.equals(Constant.CancelClose)){
             checkbox.setChecked(false);
+            isOrNotCheck();
             AlarmsConfig config = createAlarmsConfig();
             Alarms.saveConfig(MainActivity.this, config);
 
