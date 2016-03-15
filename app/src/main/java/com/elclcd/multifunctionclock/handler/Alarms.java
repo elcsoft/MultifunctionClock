@@ -17,6 +17,7 @@ import com.elclcd.multifunctionclock.utils.CmdExecuter;
 import com.elclcd.multifunctionclock.utils.Constant;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -59,10 +60,9 @@ public class Alarms {
 
         editor.commit();
 
-        resetConfig(context, config);
+//        resetConfig(context, config);
 
 
-        //resetConfig();、
     }
 
     /**
@@ -97,8 +97,7 @@ public class Alarms {
     }
 
     //发送定时广播
-    private static void setAlarmManger(Context context) {
-        Log.i("test", "222");
+    private   static void setAlarmManger(Context context){
         SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmm");
         try {
             String time = getTheWarningTime();
@@ -107,13 +106,13 @@ public class Alarms {
             Log.i("test", String.valueOf(d));
             Calendar calendar = Calendar.getInstance();
 //            calendar.setTimeInMillis(System.currentTimeMillis());//参数是毫秒值
-//		    calendar.add(Calendar.SECOND,10);
+//		    calendar.add(Calendar.SECOND,5);
 
             calendar.setTime(date);
             long ct = System.currentTimeMillis();
             Log.i("test", String.valueOf(ct));
 
-            manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+		    manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -123,10 +122,10 @@ public class Alarms {
     private static String getTheWarningTime() {
         String time1 = offCommand.substring(0, 10);
         int mintue = Integer.parseInt(offCommand.substring(10));
-        mintue -= WarningTime;
-        StringBuilder sb = new StringBuilder(time1);
+        mintue-=WarningTime;
+        StringBuilder sb=new StringBuilder(time1);
         sb.append(mintue);
-        return sb.toString();
+        return  sb.toString();
     }
 
     /**
@@ -141,46 +140,46 @@ public class Alarms {
         //TODO 生成命令
         //开机关机
 
-        Intent intent = new Intent(Constant.AlarmReceiverSend);
+        Intent intent=new Intent(Constant.AlarmReceiverSend);
         sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         AlarmsConfig.TimePoint timeOn = config.getPowerOnTime();
         AlarmsConfig.TimePoint timeOff = config.getPowerOffTime();
 
-        int y = 0;
+        int y=0;
         String onCommand = getTime(timeOn, config, 0);//正常无额外添加天数
-        offCommand = getTime(timeOff, config, 0);
-        boolean b = judgmentTimeStyle(onCommand, offCommand);
-        if (b == true) {
-            int n = getDiffentDay(offCommand);
-            n += 1;//把关机的第二天
-            onCommand = getTime(timeOn, config, n);
+        offCommand = getTime(timeOff, config,0);
+        boolean b=judgmentTimeStyle(onCommand,offCommand);
+        if(b==true){
+            int n=getDiffentDay(offCommand);
+            n+=1;//把关机的第二天
+            onCommand=getTime(timeOn, config, n);
         }
         String command = getCommond(onCommand, offCommand);
         CmdExecuter executer = new CmdExecuter();
-        Boolean b1 = config.isEnabled();
-        if (b1 == true) {
-            Log.i("test", "111");
+        Boolean b1=config.isEnabled();
+        if(b1==true){
             setAlarmManger(context);
-            command = command.replaceAll("disable", "enable");
-            Log.i("test", command);
+            command=command.replaceAll("disable","enable");
 //            return  true;
-        } else {
+        }
+        else{
             manager.cancel(sender);
-            command = command.replaceAll("enable", "disable");
+            command=command.replaceAll("enable", "disable");
 
         }
-//        executer.exec(command);
+        Log.i("test",command);
+        executer.exec(command);
 //        return  false;
         return command;
     }
 
-    private static int getDiffentDay(String offCommand) {
-        Calendar c = Calendar.getInstance();
+    private static int getDiffentDay(String offCommand){
+        Calendar c =Calendar.getInstance();
         int currentday = c.get(Calendar.DAY_OF_MONTH);
-        int closeday = Integer.parseInt(offCommand.substring(6, 8));
-        int diffent = closeday - currentday;
+        int  closeday =Integer.parseInt(offCommand.substring(6, 8));
+        int diffent=closeday-currentday;
         return diffent;
     }
 
@@ -198,42 +197,51 @@ public class Alarms {
 //                return true;
 //            }
 //        }
-        int[] open = commandToTime(onCommand);//201603150102
-        int[] close = commandToTime(offCommand);//201603151102
-        boolean b = Compare(open, close);
+        int [] open=commandToTime(onCommand);//201603150102
+        int [] close=commandToTime(offCommand);//201603151102
+        boolean b=Compare(open,close);
 
         return b;
     }
 
     //判断开始命令的时间是不是小于关闭命令的时间
     private static boolean Compare(int[] open, int[] close) {
-        if (open[0] < close[0]) {
-            return true;
-        } else if (open[0] == close[0]) {
-            if (open[1] < close[1]) {
+        if (open[0]<close[0]){
+            return  true;
+        }
+        else if(open[0]==close[0]){
+            if(open[1]<close[1]){
                 return true;
-            } else if (open[1] == close[1]) {
-                if (open[2] < close[2]) {
+            }
+            else if(open[1]==close[1]){
+                if(open[2]<close[2]){
                     return true;
-                } else if (open[2] == close[2]) {
-                    if (open[3] < close[3]) {
-                        return true;
-                    } else if (open[3] == close[3]) {
-                        if (open[4] <= close[4]) {
+                }
+                else if(open[2]==close[2]){
+                    if(open[3]<close[3]){
+                        return  true;
+                    }
+                    else if(open[3]==close[3]){
+                        if(open[4]<=close[4]){
                             return true;
-                        } else {
+                        }
+                        else {
                             return false;
                         }
-                    } else {
-                        return false;
                     }
-                } else {
+                    else {
+                        return  false;
+                    }
+                }
+                else {
                     return false;
                 }
-            } else {
+            }
+            else {
                 return false;
             }
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -255,7 +263,7 @@ public class Alarms {
     }
 
 
-    private static String getTime(AlarmsConfig.TimePoint time, AlarmsConfig config, int n) {
+    private static String getTime(AlarmsConfig.TimePoint time, AlarmsConfig config,int n) {
         Calendar c = Calendar.getInstance();
         int[] time1 = getDate(time, config, n);
         String year = Chick(time1[0]);
@@ -278,34 +286,36 @@ public class Alarms {
     参数n是关机时间与今天相差的天数，当开始命令的时间小于关闭命令的时间的时候，需要从关闭后的第二天
     开始找到最新的开机时间
     */
-    private static int[] getDate(AlarmsConfig.TimePoint time, AlarmsConfig config, int n) {
+    private static int[] getDate(AlarmsConfig.TimePoint time, AlarmsConfig config,int n) {
         Calendar c = Calendar.getInstance();
         int[] times = new int[3];
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
-        int discrepancy = findRightDay(config, n);
+        int discrepancy = findRightDay(config,n);
         times[0] = year;
         times[1] = month;
         if (discrepancy == 0) {
             Boolean b = isNeedToTomorrow(time);
             if (b == true) {
 //                times[2]=day+1;
-                if (n > 0) {
+                if(n>0){
                     //如果n>0;则说明开机时间小于关机时间，因为n是关机时间与当前时间差值的第二天，所以判断的时候不用在加1.
-                    int discrepancy1 = findRightDay(config, n);
-                    times[2] = day + discrepancy1 + n;
-                } else {
+                    int discrepancy1 = findRightDay(config,n);
+                    times[2] = day+discrepancy1+n;
+                }
+               else {
                     //如果今天设定的时间小于当前的时间，则用明天设定的时间来计算差异时间
-                    int discrepancy1 = findRightDay(config, 1);
-                    times[2] = day + 1 + discrepancy1;
+                        int discrepancy1 = findRightDay(config,1);
+                        times[2] = day+1+discrepancy1;
                 }
 
             } else {
-                times[2] = day + n;
+                times[2] = day+n;
             }
-        } else {
-            times[2] = day + discrepancy + n;
+        }
+        else {
+            times[2]=day+discrepancy+n;
         }
         return times;
     }
@@ -353,26 +363,30 @@ public class Alarms {
     }
 
     //判断最近要开关机的一天与今天的相差数
-    private static int findRightDay(AlarmsConfig config, int addtime) {
+    private static int findRightDay(AlarmsConfig config,int  addtime) {
         Calendar c = Calendar.getInstance();
-        int todayIndex = c.get(Calendar.DAY_OF_WEEK) - 2 + addtime;//今天的星期在数组中的下标
+        int todayIndex = c.get(Calendar.DAY_OF_WEEK) - 1+addtime;//今天的星期在数组中的下标
         if (todayIndex >= 7) {
             todayIndex -= 7;
         }
         boolean[] b = config.getDayWeek();
-        int index;
+        int index ;
         for (index = 0; index < 7; index++) {
             if (b[todayIndex] == true) {
                 break;
             } else {
                 todayIndex++;
                 if (todayIndex >= 7) {
-                    todayIndex -= 7;
+                    todayIndex -=7;
                 }
             }
         }
         return index;
     }
+
+
+
+
 
 
 //    //  定时发送广播激活服务

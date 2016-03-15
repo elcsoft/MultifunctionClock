@@ -13,6 +13,7 @@
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
+            android:launchMode="singleInstance"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,10 +28,15 @@
         <receiver android:name=".handler.AlarmReceiver" >
             <intent-filter>
                 <action android:name="AlarmReceiver.send" />
-
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".WarningTimeDialogActivity"
+            android:label="@string/title_activity_warning_time_dialog"
+            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar"
+            >
+        </activity>
     </application>
 
 </manifest>

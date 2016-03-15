@@ -2,6 +2,9 @@ package com.elclcd.multifunctionclock;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +21,7 @@ import android.widget.TimePicker;
 import com.elclcd.multifunctionclock.handler.Alarms;
 import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.RemindThread;
+import com.elclcd.multifunctionclock.utils.Constant;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
@@ -298,7 +302,14 @@ public class MainActivity extends Activity {
      * 开启一个线程，判断时间是否为设定的时间
      */
 
-    public void chickTime() {
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String action=intent.getAction();
+        if(action.equals(Constant.CancelClose)){
+            checkbox.setChecked(false);
+            AlarmsConfig config = createAlarmsConfig();
+            Alarms.saveConfig(MainActivity.this, config);
 
 
         final Handler handler = new Handler() {
@@ -314,6 +325,7 @@ public class MainActivity extends Activity {
 
 
 
+        }
     }
 
 
