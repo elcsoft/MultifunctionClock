@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Multifunctionclock1</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title">设置定时开关机</string>
+    <string name="title2">开启定时开机和关机</string>
+    <string name="xingqiyi">星期一</string>
+    <string name="xingqier">星期二</string>
+    <string name="xingqisan">星期三</string>
+    <string name="xingqisi">星期四</string>
+    <string name="xingqiwu">星期五</string>
+    <string name="xingqiliu">星期六</string>
+    <string name="xingqitian">星期天</string>
+    <string name="kaiji">开机时间</string>
+    <string name="guanji">关机时间</string>
+
+    <string name="submit">提交</string>
+
+    <string name="dialog_title">TECHFIVE_Manager</string>
+    <string name="dialog_ver">Ver:</string>
+    <string name="dialog_code">Code:</string>
+    <string name="dialog_button">FERME</string>
+    <string name="remind">提示：</string>
+
+
+
+
+</resources>

@@ -302,31 +302,7 @@ public class MainActivity extends Activity {
      * 开启一个线程，判断时间是否为设定的时间
      */
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        String action=intent.getAction();
-        if(action.equals(Constant.CancelClose)){
-            checkbox.setChecked(false);
-            isOrNotCheck();
-            AlarmsConfig config = createAlarmsConfig();
-            Alarms.saveConfig(MainActivity.this, config);
 
-//        final Handler handler = new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//
-//                Intent intent=new Intent(MainActivity.this,DialogActivity.class);
-//                startActivity(intent);
-//                super.handleMessage(msg);
-//            }
-//        };
-//        RemindThread.remind(handler);
-
-
-
-        }
-    }
 
 
 

@@ -21,14 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DialogActivity"
-            android:theme="@android:style/Theme.Dialog">
-        </activity>
 
         <receiver android:name=".handler.AlarmReceiver" >
             <intent-filter>
-                <action android:name="AlarmReceiver.send.warningtime" />
                 <action android:name="AlarmReceiver.send.resetcommand" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".handler.TimeReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
 
             </intent-filter>
         </receiver>
