@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.elclcd.multifunctionclock.handler.Alarms;
+import com.elclcd.multifunctionclock.handler.TimeReceiver;
 import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.RemindThread;
 import com.elclcd.multifunctionclock.utils.Constant;
@@ -28,6 +30,7 @@ import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Filter;
 
 
 public class MainActivity extends Activity {
@@ -56,6 +59,7 @@ public class MainActivity extends Activity {
     private TextView verView;
     private TextView codeView;
     private TextView dialog_button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -308,7 +312,7 @@ public class MainActivity extends Activity {
 
 //    @Override
 //    protected void onDestroy() {
-////        RemindThread.start=false;
+//        unregisterReceiver(receiver);
 //        super.onDestroy();
 //    }
 }

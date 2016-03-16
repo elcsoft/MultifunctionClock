@@ -6,13 +6,13 @@
 
     <string name="title">Timer Switch</string>
     <string name="title2">Opening Automatic Function </string>
-    <string name="xingqiyi">Monday</string>
-    <string name="xingqier">Tuesday</string>
-    <string name="xingqisan">Wednesday</string>
-    <string name="xingqisi">Thursday</string>
-    <string name="xingqiwu">Friday</string>
-    <string name="xingqiliu">Saturday</string>
-    <string name="xingqitian">Sunday</string>
+    <string name="xingqiyi">Mon.</string>
+    <string name="xingqier">Tues.</string>
+    <string name="xingqisan">Wed.</string>
+    <string name="xingqisi">Thur.</string>
+    <string name="xingqiwu">Fri.</string>
+    <string name="xingqiliu">Sat.</string>
+    <string name="xingqitian">Sun.</string>
     <string name="kaiji">Boot Time</string>
     <string name="guanji">Off Time</string>
 

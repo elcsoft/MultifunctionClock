@@ -93,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/xingqitian"
                 android:textColor="#646464"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                />
 
             <CheckBox
                 android:id="@+id/checkboxtian"
@@ -115,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/xingqiyi"
                 android:textColor="#646464"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+               />
 
             <CheckBox
                 android:id="@+id/checkboxyi"

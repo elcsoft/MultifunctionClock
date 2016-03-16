@@ -74,13 +74,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/kaiguan"
         android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal">
 
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -97,15 +97,16 @@
                 android:id="@+id/checkboxtian"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="3dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:layout_marginLeft="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -119,16 +120,17 @@
                 android:id="@+id/checkboxyi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="3dp"
                 android:textSize="25dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:layout_marginLeft="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -142,16 +144,17 @@
                 android:id="@+id/checkboxer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="3dp"
                 android:textSize="25dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:layout_marginLeft="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -165,13 +168,13 @@
                 android:id="@+id/checkboxsan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="3dp"
                 android:textSize="25dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -183,33 +186,26 @@
                 android:layout_height="wrap_content"
                 android:text="@string/xingqisi"
                 android:textColor="#646464"
+                android:layout_marginLeft="5dp"
                 android:textSize="30dp" />
 
             <CheckBox
                 android:id="@+id/checkboxsi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="3dp"
                 android:textSize="25dp" />
         </LinearLayout>
 
 
 
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/Linear_2"
-        android:layout_below="@+id/linear"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:orientation="horizontal">
-
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -223,15 +219,16 @@
                 android:id="@+id/checkboxwu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="3dp"
                 android:textSize="25dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -239,29 +236,35 @@
                 android:layout_height="wrap_content"
                 android:text="@string/xingqiliu"
                 android:textColor="#646464"
+
                 android:textSize="30dp" />
 
             <CheckBox
                 android:id="@+id/checkboxliu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="3dp"
                 android:textColor="#646464"
                 android:textSize="25dp" />
 
         </LinearLayout>
 
+
+
+
+
     </LinearLayout>
+
 
 
     <LinearLayout
         android:id="@+id/timepickerLinear"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Linear_2"
+        android:layout_below="@+id/linear"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:orientation="horizontal">
 
         <RelativeLayout
