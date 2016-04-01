@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.elclcd.multifunctionclock.utils.Application;
 import com.elclcd.multifunctionclock.utils.Constant;
 
 /**
@@ -15,8 +16,7 @@ import com.elclcd.multifunctionclock.utils.Constant;
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
            if(action.equals((Constant.ResetCommand))){
-               Log.i("test","222");
-                Alarms.resetDo();
+                Alarms.resetDo(context.getApplicationContext());
             }
 
 

@@ -37,8 +37,6 @@ public class Alarms {
     private static String offCommand;//关机命令
     public static final int WarningTime = 1;//警告时间
     private static String onCommand;//开机命令
-    private static Context context1;
-    private static AlarmsConfig config1;
 
     /**
      * 保存配置
@@ -136,12 +134,10 @@ public class Alarms {
      * @param config
      * @return 返回程序的状态，true 执行 ，false 不执行
      */
-    public static void resetConfig(Context context, AlarmsConfig config) {
+        public static void resetConfig(Context context, AlarmsConfig config) {
         //TODO 计算时间
         //TODO 生成命令
         //开机关机
-        config1 = config;
-        context1 = context;
         AlarmsConfig.TimePoint timeOn = config.getPowerOnTime();
         AlarmsConfig.TimePoint timeOff = config.getPowerOffTime();
         boolean weeks[] = config.getDayWeek();
@@ -170,6 +166,19 @@ public class Alarms {
         }
         Log.i("test", command);
         executer.exec(command);
+
+//            SharedPreferences sharePre = context.getSharedPreferences("test", Context.MODE_PRIVATE);
+//            Calendar c=Calendar.getInstance();
+//            int year =c.get(Calendar.YEAR);
+//            int month = c.get(Calendar.MONTH) + 1;
+//            int day = c.get(Calendar.DAY_OF_MONTH);
+//            int hour =c.get(Calendar.HOUR_OF_DAY);
+//            int minute  =c.get(Calendar.MINUTE);
+//            String nn=Chick(year)+Chick(month)+Chick(day)+Chick(hour)+Chick(minute);
+//            SharedPreferences.Editor editor = sharePre.edit();
+//            editor.putString("time",nn);
+//            editor.putString("command",command);
+//            editor.commit();
 
 
     }
@@ -363,8 +372,9 @@ public class Alarms {
         return time;
     }
 
-    public static void resetDo() {
-        resetConfig(context1, config1);
+    public static void resetDo(Context context) {
+        AlarmsConfig config=getConfig(context);
+        resetConfig(context, config);
     }
 
 }
