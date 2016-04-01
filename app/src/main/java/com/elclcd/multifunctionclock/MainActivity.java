@@ -2,15 +2,7 @@ package com.elclcd.multifunctionclock;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Intent;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -20,17 +12,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.elclcd.multifunctionclock.handler.Alarms;
-import com.elclcd.multifunctionclock.handler.TimeReceiver;
 import com.elclcd.multifunctionclock.utils.Application;
-import com.elclcd.multifunctionclock.utils.RemindThread;
-import com.elclcd.multifunctionclock.utils.Constant;
 import com.elclcd.multifunctionclock.utils.TimePickerSize;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Filter;
 
 
 public class MainActivity extends Activity {
@@ -77,10 +64,6 @@ public class MainActivity extends Activity {
             updateView(config);
         }
 
-//        if(thread==null){
-//            chickTime();
-//        }
-
 
     }
 
@@ -108,9 +91,6 @@ public class MainActivity extends Activity {
 
         timeSize.resizePikcer(timePickerlift);
         timeSize.resizePikcer(timePickerright);
-
-        timePickerlift.setOnTimeChangedListener(new timeChangedLinsister());
-        timePickerright.setOnTimeChangedListener(new timeChangedLinsister());
 
 
         sunday = (CheckBox) findViewById(R.id.checkboxtian);
@@ -155,9 +135,7 @@ public class MainActivity extends Activity {
             checkbox.setChecked(true);
         }
         isOrNotCheck();//当开关开启才能操作其他控件
-        if (config != null) {
-            RemindThread.config=config;
-        }
+
 
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setChecked(config.getDayWeek()[i]);
@@ -187,7 +165,6 @@ public class MainActivity extends Activity {
             config.setEnablen(false);
         }
 
-        RemindThread.config.setEnablen(config.isEnabled());
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isChecked()) {
@@ -219,8 +196,6 @@ public class MainActivity extends Activity {
             if (v.getId() == R.id.checkbox) {
                 isOrNotCheck();
             }
-            AlarmsConfig config = createAlarmsConfig();
-            Alarms.saveConfig(MainActivity.this, config);
 
         }
     }
@@ -268,20 +243,7 @@ public class MainActivity extends Activity {
 
     }
 
-    /**
-     * timepicker监听
-     */
-    class timeChangedLinsister implements TimePicker.OnTimeChangedListener {
-        @Override
-        public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 
-            AlarmsConfig config=createAlarmsConfig();
-            Alarms.saveConfig(MainActivity.this, config);
-
-            RemindThread.config=config;
-
-        }
-    }
     /**
      * 当开关开启才能操作，否者不能
      */
@@ -302,17 +264,8 @@ public class MainActivity extends Activity {
         }
     }
 
-    /**
-     * 开启一个线程，判断时间是否为设定的时间
-     */
-
-
-
-
-
-//    @Override
-//    protected void onDestroy() {
-//        unregisterReceiver(receiver);
-//        super.onDestroy();
-//    }
+   public   void doClick(View v){
+       AlarmsConfig config = createAlarmsConfig();
+       Alarms.saveConfig(MainActivity.this, config);
+   }
 }
