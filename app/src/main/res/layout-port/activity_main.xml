@@ -65,7 +65,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:visibility="gone"
+            />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/switcher"
+            />
     </RelativeLayout>
 
     <LinearLayout
@@ -334,8 +343,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/confirm"
-        android:background="@null"
+        android:text="@string/submit"
+        android:background="@drawable/submit_button_selector"
         android:id="@+id/confirm"
         android:onClick="doClick"
         />

@@ -3,13 +3,17 @@ package com.elclcd.multifunctionclock;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.elclcd.multifunctionclock.handler.Alarms;
 import com.elclcd.multifunctionclock.utils.Application;
@@ -24,7 +28,8 @@ public class MainActivity extends Activity {
 
     private TimePicker timePickerlift;
     private TimePicker timePickerright;
-    private CheckBox checkbox;//判断是否启用定时开关机
+//    private CheckBox checkbox;//判断是否启用定时开关机
+    private Switch switcher;//判断是否启用定时开关机
     private CheckBox sunday;
     private CheckBox monday;
     private CheckBox tuesday;
@@ -73,8 +78,8 @@ public class MainActivity extends Activity {
      */
     public void init() {
         //开关
-        checkbox = (CheckBox) findViewById(R.id.checkbox);
-        checkbox.setOnClickListener(new MyLinsister());
+        switcher = (Switch) findViewById(R.id.switcher);
+        switcher.setOnCheckedChangeListener(new MyCheckChangeListener());
 
         //timepicker
         timePickerlift = (TimePicker) findViewById(R.id.timePicker);
@@ -132,7 +137,7 @@ public class MainActivity extends Activity {
      */
     private void updateView(AlarmsConfig config) {
         if (config.isEnabled()) {
-            checkbox.setChecked(true);
+            switcher.setChecked(true);
         }
         isOrNotCheck();//当开关开启才能操作其他控件
 
@@ -158,7 +163,7 @@ public class MainActivity extends Activity {
     private AlarmsConfig createAlarmsConfig() {
         AlarmsConfig config = new AlarmsConfig();
         boolean[] weeks = new boolean[7];
-        if (checkbox.isChecked()) {
+        if (switcher.isChecked()) {
             config.setEnablen(true);
 
         } else {
@@ -199,6 +204,17 @@ public class MainActivity extends Activity {
 
         }
     }
+
+    class MyCheckChangeListener implements CompoundButton.OnCheckedChangeListener{
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            isOrNotCheck();
+
+        }
+    }
+
+
 
     /**
      *
@@ -248,7 +264,10 @@ public class MainActivity extends Activity {
      * 当开关开启才能操作，否者不能
      */
     private void isOrNotCheck() {
-        if (checkbox.isChecked()) {
+        if(switcher==null){
+            return;
+        }
+        if (switcher.isChecked()) {
 
             for (CheckBox box : list) {
                 box.setEnabled(true);
@@ -265,7 +284,20 @@ public class MainActivity extends Activity {
     }
 
    public   void doClick(View v){
+       final AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+       String message= (String) MainActivity.this.getApplication().getText(R.string.submit_successful);
+       builder.setMessage(message);
+       final AlertDialog dialog=builder.show();
        AlarmsConfig config = createAlarmsConfig();
        Alarms.saveConfig(MainActivity.this, config);
+       Handler h=new Handler();
+       h.postDelayed(new Runnable() {
+           @Override
+           public void run() {
+               if(dialog!=null&&dialog.isShowing()){
+                   dialog.dismiss();
+               }
+           }
+       },2000);
    }
 }

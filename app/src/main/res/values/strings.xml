@@ -17,6 +17,7 @@
     <string name="guanji">Off Time</string>
 
     <string name="submit">Submit</string>
+    <string name="submit_successful">Submit successful</string>
 
     <string name="dialog_title">TECHFIVE_Manager</string>
     <string name="dialog_ver">Ver:</string>
