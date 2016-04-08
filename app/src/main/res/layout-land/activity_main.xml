@@ -5,8 +5,6 @@
     tools:context=".MainActivity">
 
 
-
-
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="fill_parent"
@@ -14,29 +12,31 @@
         android:background="#ac374f"
         android:orientation="vertical">
 
-        <TextView android:id="@+id/title_text"
+        <TextView
+            android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="@string/title"
             android:layout_marginTop="80dp"
+            android:text="@string/title"
             android:textColor="#f5f5f5"
             android:textSize="30dp" />
 
-        <LinearLayout  android:layout_below="@+id/title_text"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="4dp"
+            android:layout_below="@+id/title_text"
             android:layout_marginTop="30dp"
             android:background="#a31d30"></LinearLayout>
 
 
-            <Button android:id="@+id/icon_dialog"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_margin="20dp"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/buttonstyle"></Button>
-
+        <Button
+            android:id="@+id/icon_dialog"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:background="@drawable/buttonstyle"></Button>
 
 
     </RelativeLayout>
@@ -69,15 +69,13 @@
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"
             android:textSize="20dp"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <Switch
+            android:id="@+id/switcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/switcher"
-            android:layout_alignParentRight="true"
-            />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <LinearLayout
@@ -87,7 +85,6 @@
         android:layout_below="@+id/kaiguan"
         android:layout_marginTop="25dp"
         android:orientation="horizontal">
-
 
 
         <LinearLayout
@@ -102,8 +99,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/xingqitian"
                 android:textColor="#646464"
-                android:textSize="30dp"
-                />
+                android:textSize="30dp" />
 
             <CheckBox
                 android:id="@+id/checkboxtian"
@@ -125,8 +121,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/xingqiyi"
                 android:textColor="#646464"
-                android:textSize="30dp"
-               />
+                android:textSize="30dp" />
 
             <CheckBox
                 android:id="@+id/checkboxyi"
@@ -205,6 +200,16 @@
                 android:textSize="25dp" />
         </LinearLayout>
 
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -222,9 +227,8 @@
             <CheckBox
                 android:id="@+id/checkboxwu"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textSize="25dp" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -238,6 +242,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/xingqiliu"
+                android:textColor="#646464"
                 android:textSize="30dp" />
 
             <CheckBox
@@ -245,12 +250,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="#646464"
                 android:textSize="25dp" />
+        </LinearLayout>
 
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            >
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            >
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -259,7 +292,7 @@
         android:id="@+id/timepickerLinear"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linear"
+        android:layout_below="@+id/linear2"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
@@ -320,21 +353,20 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_above="@id/confirm"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#aaaaaa">
-    </LinearLayout>
+        android:layout_above="@id/confirm"
+        android:background="#aaaaaa"></LinearLayout>
+
     <Button
+        android:id="@+id/confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/submit"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/submit_button_selector"
-        android:id="@+id/confirm"
         android:onClick="doClick"
-        />
+        android:text="@string/submit" />
 
 
 </RelativeLayout>

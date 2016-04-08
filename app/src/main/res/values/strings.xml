@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Multifunctionclock1</string>
+    <string name="app_name">Multifunctionclock</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -19,7 +19,7 @@
     <string name="submit">Submit</string>
     <string name="submit_successful">Submit successful</string>
 
-    <string name="dialog_title">TECHFIVE_Manager</string>
+    <string name="dialog_title">Version Information</string>
     <string name="dialog_ver">Ver:</string>
     <string name="dialog_code">Code:</string>
     <string name="dialog_button">FERME</string>
