@@ -21,9 +21,9 @@ public class CmdExecuter {
 
 //            Command="reboot";
 //            ps1 = Runtime.getRuntime().exec(new String[]{"su", Command});
-            p = Runtime.getRuntime().exec("su");
+            p = Runtime.getRuntime().exec("su");//这句要用
             dos = new DataOutputStream(p.getOutputStream());
-            dos.writeBytes(command + "\n");
+            dos.writeBytes(command + "\n");//这句要用
             dos.flush();
             dos.writeBytes("exit\n");
             dos.flush();
