@@ -1,6 +1,9 @@
 package com.elclcd.multifunctionclock.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
+
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,6 +16,7 @@ import java.io.InputStreamReader;
  */
 public class CmdExecuter {
     private Process p;
+    private Logger logger=Logger.getLogger(CmdExecuter.class);
     //
     public void exec(String command){
         DataOutputStream dos = null;
@@ -27,8 +31,8 @@ public class CmdExecuter {
             dos.flush();
             dos.writeBytes("exit\n");
             dos.flush();
+            logger.info("write command finish");
             String line = null;
-
             new Thread() {
                 public BufferedReader Reader1;
 
@@ -40,9 +44,13 @@ public class CmdExecuter {
 
                         while ((line = Reader1.readLine()) != null) {
                             Log.e("MainActivity", "---result :" + line);
+                            logger.info(line);
                         }
                     } catch (IOException e) {
                         Log.e("MainActivity", "--error :", e);
+                        if(!TextUtils.isEmpty(e.getMessage())){
+                            logger.info(e.getMessage());
+                        }
                         e.printStackTrace();
 
                     }
@@ -69,9 +77,13 @@ public class CmdExecuter {
 
                         while ((line = Reader1.readLine()) != null) {
                             Log.e("MainActivity", "---error :" + line);
+                            logger.info(line);
                         }
                     } catch (IOException e) {
                         Log.e("MainActivity", "--error :", e);
+                        if(!TextUtils.isEmpty(e.getMessage())){
+                            logger.info(e.getMessage());
+                        }
                         e.printStackTrace();
 
                     }
@@ -90,6 +102,9 @@ public class CmdExecuter {
 
         } catch (IOException e) {
             Log.e("MainActivity", "---error :", e);
+            if(!TextUtils.isEmpty(e.getMessage())){
+                logger.info(e.getMessage());
+            }
             e.printStackTrace();
 
 

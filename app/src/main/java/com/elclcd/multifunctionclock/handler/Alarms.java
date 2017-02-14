@@ -17,6 +17,8 @@ import com.elclcd.multifunctionclock.utils.CmdExecuter;
 import com.elclcd.multifunctionclock.utils.Constant;
 import com.elclcd.multifunctionclock.vo.AlarmsConfig;
 
+import org.apache.log4j.Logger;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -134,7 +136,7 @@ public class Alarms {
      * @param config
      * @return 返回程序的状态，true 执行 ，false 不执行
      */
-        public static void resetConfig(Context context, AlarmsConfig config) {
+    public static void resetConfig(Context context, AlarmsConfig config) {
         //TODO 计算时间
         //TODO 生成命令
         //开机关机
@@ -164,7 +166,8 @@ public class Alarms {
             command = command.replaceAll("enable", "disable");
 
         }
-        Log.i("test", command);
+        Logger logger = Logger.getLogger(Alarms.class);
+        logger.info(command);
         executer.exec(command);
 
 //            SharedPreferences sharePre = context.getSharedPreferences("test", Context.MODE_PRIVATE);
@@ -373,7 +376,7 @@ public class Alarms {
     }
 
     public static void resetDo(Context context) {
-        AlarmsConfig config=getConfig(context);
+        AlarmsConfig config = getConfig(context);
         resetConfig(context, config);
     }
 
