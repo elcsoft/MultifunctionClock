@@ -17,6 +17,5 @@ public class TimeReceiver extends BroadcastReceiver{
         log.info("时区变动,receive TimeReceiver");
         AlarmsConfig config=Alarms.getConfig(context);
             Alarms.resetConfig(context,config);
-
     }
 }
